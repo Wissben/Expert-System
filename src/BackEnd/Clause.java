@@ -26,7 +26,7 @@ public class Clause {
         lhs.addClauseRef(this);
         ruleRefs = new Vector();
         truth = null;
-        consequent = new Boolean(false);
+        consequent = false;
     }
 
     void addRuleRef(Rule ref) {
@@ -34,22 +34,22 @@ public class Clause {
     }
 
     Boolean check() {
-        if (consequent.booleanValue() == true) return null;
+        if (consequent) return null;
         if (lhs.value == null) {
             return truth = null;    // Var value is undefined
         } else {
             switch (cond.index) {
                 case 1:
-                    truth = new Boolean(lhs.value.equals(rhs));
+                    truth = lhs.value.equals(rhs);
                     break;
                 case 2:
-                    truth = new Boolean(lhs.value.compareTo(rhs) > 0);
+                    truth = lhs.value.compareTo(rhs) > 0;
                     break;
                 case 3:
-                    truth = new Boolean(lhs.value.compareTo(rhs) < 0);
+                    truth = lhs.value.compareTo(rhs) < 0;
                     break;
                 case 4:
-                    truth = new Boolean(lhs.value.compareTo(rhs) != 0);
+                    truth = lhs.value.compareTo(rhs) != 0;
                     break;
             }
             return truth;
@@ -57,11 +57,11 @@ public class Clause {
     }
 
     void isConsequent() {
-        consequent = new Boolean(true);
+        consequent = Boolean.TRUE;
     }
 
     Rule getRule() {
-        if (consequent.booleanValue() == true)
+        if (consequent)
             return (Rule) ruleRefs.firstElement();
         else return null;
     }

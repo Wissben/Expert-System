@@ -18,7 +18,6 @@ public abstract class Variable {
     public Variable() {
     }
 
-    ;
 
     public Variable(String Name) {
         name = Name;

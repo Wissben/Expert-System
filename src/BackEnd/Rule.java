@@ -13,7 +13,6 @@ import java.util.Vector;
 //import java.io.*;
 
 public class Rule {
-    private RuleBase ruleBase;
     private String ruleName;
     private static TextArea textArea1;//////////en plus
     private ArrayList<Clause> antecedents; // allow up to 4 antecedents for now
@@ -24,10 +23,9 @@ public class Rule {
 
     public Rule(String ruleName, ArrayList<Clause> lefts, Clause right)
     {
-        this.ruleBase=ruleBase;
         this.ruleName = ruleName;
+        this.antecedents = new ArrayList<>(lefts);
         for (int i = 0; i < lefts.size(); i++) {
-            this.antecedents.set(i, lefts.get(i));
             lefts.get(i).addRuleRef(this);
         }
         this.consequent = right;
@@ -61,7 +59,6 @@ public class Rule {
 //it is references, and then all rules which contain
 //those clauses
     void fire() {
-        RuleBase.appendText("\nFiring rule " + ruleName);
         truth = new Boolean(true);
         fired = true;
 //set the variable value and update clauses
@@ -88,49 +85,40 @@ public class Rule {
 
 
     //display the rule in text format
-    void display(TextArea textArea) {
-        textArea.appendText(ruleName + ": IF ");
+    void display() {
+        System.out.println(ruleName + ": IF ");
         for (int i = 0; i < antecedents.size(); i++) {
             Clause nextClause = antecedents.get(i);
-            textArea.appendText(nextClause.lhs.name +
+            System.out.println(nextClause.lhs.name +
                     nextClause.cond.asString() +
                     nextClause.rhs + " ");
             if ((i + 1) < antecedents.size())
-                textArea.appendText("\n AND ");
+                System.out.println("\n AND ");
         }
-        textArea.appendText("\n THEN ");
-        textArea.appendText(consequent.lhs.name +
+        System.out.println("\n THEN ");
+        System.out.println(consequent.lhs.name +
                 consequent.cond.asString() + consequent.rhs + "\n");
     }
 //if rule is false then pop, continue
 //if rule is null then we couldnt find a value
 
-    Boolean backChain() {
-        RuleBase.appendText("\nEvaluating rule " + ruleName);
+    Boolean backChain(RuleBase ruleBase,AskUserCallBack userAsker) {
         for (int i = 0; i < antecedents.size(); i++) { // test each clause
             if (antecedents.get(i).truth == null)
                 ruleBase.backwardChain(antecedents.get(i).lhs.name);
             if (antecedents.get(i).truth == null) { // couldn�t prove t or f
-                antecedents.get(i).lhs.askUser(); // so ask user for help
+                RuleVariable lhs = antecedents.get(i).lhs;
+                lhs.setValue(userAsker.askUser(lhs.promptText,lhs.name));
+
                 truth = antecedents.get(i).check(); // redundant?
             }
-            if (antecedents.get(i).truth.booleanValue() == true) {
-                continue; // test the next antecedent (if any)
-            } else {
-                return truth = new Boolean(false); // exit one is false
+            if (!antecedents.get(i).truth) {
+                return truth = Boolean.FALSE; // exit one is false
             }
         }
-        return truth = new Boolean(true); // all antecedents are true
+        return truth = Boolean.TRUE; // all antecedents are true
     }
 
-
-    public RuleBase getRuleBase() {
-        return ruleBase;
-    }
-
-    public void setRuleBase(RuleBase ruleBase) {
-        this.ruleBase = ruleBase;
-    }
 
     public String getRuleName() {
         return ruleName;

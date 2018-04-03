@@ -21,7 +21,6 @@ public class RuleApplet extends Applet {
         while (vars.hasMoreElements()) {
             choice2.addItem(((RuleVariable) vars.nextElement()).name);
         }
-        currentRuleBase.displayVariables(textArea3);
     }
 
     // user selected a variable
@@ -52,12 +51,10 @@ public class RuleApplet extends Applet {
     void button1_Clicked(Event event) {
         String goal = textField1.getText();
         textArea2.appendText("\n --- Starting Inferencing Cycle --- \n");
-        currentRuleBase.displayVariables(textArea2);
-        if (radioButton1.getState() == true)
+        if (radioButton1.getState())
             currentRuleBase.forwardChain();
-        if (radioButton2.getState() == true)
+        if (radioButton2.getState())
             currentRuleBase.backwardChain(goal);
-        currentRuleBase.displayVariables(textArea2);
         textArea2.appendText("\n --- Ending Inferencing Cycle --- \n");
     }
 
@@ -65,9 +62,9 @@ public class RuleApplet extends Applet {
     void button2_Clicked(Event event) {
         String rbName = choice1.getSelectedItem();
         if (rbName.equals("Vehicles")) {
-            if (radioButton1.getState() == true)
+            if (radioButton1.getState())
 //                demoVehiclesFC(vehicles);
-            if (radioButton2.getState() == true);
+            if (radioButton2.getState());
 //                demoVehiclesBC(vehicles);
         }
 //else if (rbName.equals("Bugs")) {
@@ -88,8 +85,6 @@ public class RuleApplet extends Applet {
         textArea3.setText("");
 //}}
         currentRuleBase.reset();
-        currentRuleBase.displayRules(textArea1);
-        currentRuleBase.displayVariables(textArea3);
     }
 
     public void init() {
@@ -159,8 +154,6 @@ public class RuleApplet extends Applet {
         choice1.addItem("Vehicles");
 //choice1.addItem("Bugs"") ;
 //choice1.addItem("Plants") ;
-        vehicles = new RuleBase("Vehicles Rule Base");
-        vehicles.setDisplay(textArea2);
 //        initVehiclesRuleBase(vehicles);
         currentRuleBase = vehicles;
 //bugs = new RuleBase("Bugs Rule Base") ;
@@ -170,8 +163,6 @@ public class RuleApplet extends Applet {
 //plants.setDisplay(textArea2) ;
 //initPlantsRuleBase(plants) ;
 // initialize textAreas and list controls
-        currentRuleBase.displayRules(textArea1);
-        currentRuleBase.displayVariables(textArea3);
         radioButton1.setState(true);
         choice1_Clicked(); // fill variable list
     }
