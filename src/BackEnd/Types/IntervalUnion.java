@@ -8,7 +8,7 @@ import java.util.LinkedList;
  */
 public class IntervalUnion<T extends Comparable>
 {
-    LinkedList<Interval<T>> intervals;
+    LinkedList<Interval<T>> intervals = new LinkedList<>();
     public IntervalUnion(Interval<T>... intervals)
     {
         this.intervals = new LinkedList<>();
@@ -18,17 +18,42 @@ public class IntervalUnion<T extends Comparable>
 
     public static IntervalUnion<Integer> singleInt(int value)
     {
-        return new IntervalUnion<>(new Interval<Integer>(value));
+        return new IntervalUnion<>(new Interval<>(value));
     }
 
     public static IntervalUnion<Double> singleDouble(double value)
     {
-        return new IntervalUnion<>(new Interval<Double>(value));
+        return new IntervalUnion<>(new Interval<>(value));
+    }
+
+    public IntervalUnion<T> supInterval(T value,boolean included)
+    {
+        return new IntervalUnion<>(new Interval<>(null,value,false,included));
+    }
+
+    public IntervalUnion<T> infInterval(T value,boolean included)
+    {
+        return new IntervalUnion<>(new Interval<>(value,null,included,false));
     }
 
     public IntervalUnion(LinkedList<Interval<T>> intervals) {
-        this.intervals = intervals;
+        this.intervals = new LinkedList<>(intervals);
         fixIntervals();
+    }
+
+    public IntervalUnion() // full interval union
+    {
+        this.intervals.add(new Interval<>());
+    }
+
+    public IntervalUnion(T sup, T inf, boolean includeSup, boolean includeInf)// one interval
+    {
+        this.intervals.add(new Interval<>(sup,inf,includeSup,includeInf));
+    }
+
+    public IntervalUnion(T value) // one value interval
+    {
+        this.intervals.add(new Interval<>(value));
     }
 
     protected void fixIntervals()
@@ -37,7 +62,7 @@ public class IntervalUnion<T extends Comparable>
             Interval<T> min = intervals.get(i);
             int k = i;
             for (int j = i; j < intervals.size(); j++) {
-                if(min.inf.compareTo(intervals.get(j).inf) > 0)
+                if(min.compareInfInf(min.inf,intervals.get(j).inf) > 0)
                 {
                     k = j;
                     min = intervals.get(j);
@@ -85,15 +110,37 @@ public class IntervalUnion<T extends Comparable>
         return new IntervalUnion<>(list);
     }
 
-
-
     public IntervalUnion<T> intersects(IntervalUnion<T> intervalUnion)
     {
-        IntervalUnion<T> result = new IntervalUnion<>(); // empty interval
+
+        IntervalUnion<T> result = new IntervalUnion<>(new LinkedList<>()); // empty interval
         for(Interval<T> interval:intervalUnion.intervals) // intersection with all union's intervals
             result = result.union(intersects(interval)); // intervals are fixed
         return result;
     }
+
+    public IntervalUnion<T> remove(Interval<T> interval)
+    {
+        LinkedList<Interval<T>> ints = new LinkedList<>(intervals);
+        IntervalUnion<T> result = new IntervalUnion<>(new LinkedList<>());
+        for (Interval<T> in : ints) {
+            result = result.union(in.remove(interval));
+        }
+        return result;
+    }
+
+    public IntervalUnion<T> remove(IntervalUnion<T> intervalUnion)
+    {
+        LinkedList<Interval<T>> ints = new LinkedList<>(intervalUnion.intervals);
+        IntervalUnion<T> result = new IntervalUnion<>(new LinkedList<>()); // empty
+        for (Interval<T> in : ints)
+            result = result.union(remove(in));
+        return result;
+    }
+
+
+
+
 
     @Override
     public boolean equals(Object o)
@@ -132,6 +179,21 @@ public class IntervalUnion<T extends Comparable>
             result += " U " + intervals.get(i);
         }
         return result;
+    }
+
+    public T getSup()
+    {
+        return intervals.getLast().sup;
+    }
+
+    public T getInf()
+    {
+        return intervals.getFirst().inf;
+    }
+
+    public boolean isEmpty()
+    {
+        return intervals.isEmpty();
     }
 
 }

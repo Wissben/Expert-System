@@ -40,4 +40,12 @@ public class Condition {
         }
         return temp;
     }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }

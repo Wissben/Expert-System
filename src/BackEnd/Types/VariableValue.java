@@ -21,4 +21,8 @@ public abstract class VariableValue<T> implements Comparable<VariableValue<T>>
     {
         return value+"";
     }
+
+    public T getValue() {
+        return value;
+    }
 }
