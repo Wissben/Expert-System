@@ -16,6 +16,16 @@ public class IntervalUnion<T extends Comparable>
         fixIntervals();
     }
 
+    public static IntervalUnion<Integer> singleInt(int value)
+    {
+        return new IntervalUnion<>(new Interval<Integer>(value));
+    }
+
+    public static IntervalUnion<Double> singleDouble(double value)
+    {
+        return new IntervalUnion<>(new Interval<Double>(value));
+    }
+
     public IntervalUnion(LinkedList<Interval<T>> intervals) {
         this.intervals = intervals;
         fixIntervals();
