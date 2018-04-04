@@ -8,6 +8,19 @@ import BackEnd.Condition;
 public class IntervalVariableValue<T extends Comparable> extends VariableValue<IntervalUnion<T>>
 {
 
+    public IntervalVariableValue(IntervalUnion<T> value) {
+        this.value = value;
+    }
+
+    public IntervalVariableValue<Integer> singleInt(int value)
+    {
+        return new IntervalVariableValue<>(IntervalUnion.singleInt(value));
+    }
+
+    public IntervalVariableValue<Double> singleDouble(double value)
+    {
+        return new IntervalVariableValue<>(IntervalUnion.singleDouble(value));
+    }
 
     @Override
     public void affect(Condition condition, VariableValue<IntervalUnion<T>> variableValue) throws ConflictException {
