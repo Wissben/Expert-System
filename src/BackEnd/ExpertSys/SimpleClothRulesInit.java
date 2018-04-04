@@ -1,5 +1,6 @@
-package BackEnd;
+package BackEnd.ExpertSys;
 
+import BackEnd.*;
 import BackEnd.Types.StringVariableValue;
 
 import java.util.ArrayList;

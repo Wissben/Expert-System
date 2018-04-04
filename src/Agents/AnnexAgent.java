@@ -1,6 +1,6 @@
 package Agents;
 
-import BackEnd.Expert;
+import BackEnd.ExpertSys.Expert;
 import jade.core.Agent;
 
 /**

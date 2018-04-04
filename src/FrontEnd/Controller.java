@@ -1,6 +1,7 @@
 package FrontEnd;
 
-import BackEnd.*;
+import BackEnd.ExpertSys.Expert;
+import BackEnd.ExpertSys.SimpleClothRulesInit;
 import BackEnd.Types.StringVariableValue;
 import javafx.fxml.Initializable;
 
@@ -14,7 +15,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        expert = new Expert(new SimpleClothRulesInit(),ruleVariable -> {
+        expert = new Expert(new SimpleClothRulesInit(), ruleVariable -> {
             // method callback when asking user
             // basically when we have a GUI change implementation here.
             //

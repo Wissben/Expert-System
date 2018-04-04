@@ -1,9 +1,7 @@
-package BackEnd;
+package BackEnd.ExpertSys;
 
+import BackEnd.RuleBase;
 import BackEnd.Types.StringVariableValue;
-
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Created by ressay on 03/04/18.

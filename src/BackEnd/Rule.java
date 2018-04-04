@@ -5,6 +5,7 @@ package BackEnd;/* Rule class
     
  */
 
+import BackEnd.ExpertSys.AskUserCallBack;
 import BackEnd.Types.ConflictException;
 
 import java.awt.*;

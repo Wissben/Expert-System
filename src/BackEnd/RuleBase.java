@@ -5,9 +5,9 @@ package BackEnd;/* RuleBase class
 
 */
 
+import BackEnd.ExpertSys.AskUserCallBack;
 import BackEnd.Types.VariableValue;
 
-import java.awt.*;
 import java.util.*;
 
 public class RuleBase {

@@ -1,17 +1,14 @@
 package FrontEnd;
 
-import Agents.AnnexAgent;
 import BackEnd.Condition;
-import BackEnd.Expert;
-import BackEnd.SimpleClothRulesInit;
+import BackEnd.ExpertSys.Expert;
+import BackEnd.ExpertSys.SimpleClothRulesInit;
 import BackEnd.Types.*;
-import jade.wrapper.StaleProxyException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import Environment.ContainerManager;
 
 import java.util.Scanner;
 

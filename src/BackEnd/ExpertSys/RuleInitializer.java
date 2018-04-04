@@ -1,4 +1,6 @@
-package BackEnd;
+package BackEnd.ExpertSys;
+
+import BackEnd.RuleBase;
 
 /**
  * Created by ressay on 03/04/18.
