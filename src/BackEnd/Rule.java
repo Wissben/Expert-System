@@ -5,6 +5,8 @@ package BackEnd;/* Rule class
     
  */
 
+import BackEnd.Types.ConflictException;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -60,7 +62,13 @@ public class Rule {
         truth = Boolean.TRUE;
         fired = true;
 //set the variable value and update clauses
-        consequent.lhs.setValue(consequent.rhs);
+        try {
+            consequent.updateLhs();
+        } catch (ConflictException e) {
+            e.printStackTrace();
+        }
+
+//        consequent.lhs.setValue(consequent.rhs);
 //now retest any rules whose clauses just changed
         checkRules(consequent.lhs.clauseRefs);
     }

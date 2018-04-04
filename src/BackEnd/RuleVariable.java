@@ -5,6 +5,7 @@ package BackEnd;/* RuleVariable class
 
 */
 
+import BackEnd.Types.ConflictException;
 import BackEnd.Types.VariableValue;
 
 import java.util.Enumeration;
@@ -20,6 +21,13 @@ public class RuleVariable extends Variable {
 
     public void setValue(VariableValue val) {
         value = val;
+        updateClauses();
+    }
+
+    public void setValue(VariableValue val,Condition condition) throws ConflictException {
+        if(value == null)
+            value = val;
+        else value.affect(condition,val);
         updateClauses();
     }
 

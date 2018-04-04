@@ -6,6 +6,7 @@ package BackEnd;/*  Clause class
 
 */
 
+import BackEnd.Types.ConflictException;
 import BackEnd.Types.VariableValue;
 
 import java.util.Vector;
@@ -56,6 +57,10 @@ public class Clause {
             }
             return truth;
         }
+    }
+
+    public void updateLhs() throws ConflictException {
+        lhs.setValue(rhs,cond);
     }
 
     void isConsequent() {

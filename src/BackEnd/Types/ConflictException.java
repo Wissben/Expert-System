@@ -1,4 +1,4 @@
-package BackEnd;
+package BackEnd.Types;
 
 /**
  * Created by ressay on 03/04/18.

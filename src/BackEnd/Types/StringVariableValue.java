@@ -12,7 +12,8 @@ public class StringVariableValue extends VariableValue<String>
     }
 
     @Override
-    public void affect(Condition condition, VariableValue<String> variableValue) {
+    public void affect(Condition condition, VariableValue<String> variableValue) throws ConflictException
+    {
         this.value = variableValue.value;
     }
 
