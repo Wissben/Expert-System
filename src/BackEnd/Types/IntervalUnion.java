@@ -94,4 +94,44 @@ public class IntervalUnion<T extends Comparable>
             result = result.union(intersects(interval)); // intervals are fixed
         return result;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        IntervalUnion<T> intervalUnion = (IntervalUnion<T>) o;
+        if(intervals.size() != intervalUnion.intervals.size())
+            return false;
+        for (int i = 0; i < intervals.size(); i++) {
+            if(!intervals.get(i).equals(intervalUnion.intervals.get(i)))
+                return false;
+        }
+        return true;
+    }
+
+    public boolean isLessThan(IntervalUnion<T> intervalUnion)
+    {
+        Interval<T> interval = intervalUnion.intervals.get(0);
+        Interval<T> i = intervals.get(0);
+        return i.isLessThan(interval);
+    }
+
+    public boolean isMoreThan(IntervalUnion<T> intervalUnion)
+    {
+        Interval<T> interval = intervalUnion.intervals.getLast();
+        Interval<T> i = intervals.getLast();
+        return i.isMoreThan(interval);
+    }
+
+    @Override
+    public String toString()
+    {
+        if(intervals.isEmpty())
+            return "empty";
+        String result = intervals.getFirst()+"";
+        for (int i = 1; i < intervals.size(); i++) {
+            result += " U " + intervals.get(i);
+        }
+        return result;
+    }
+
 }

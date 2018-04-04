@@ -42,9 +42,5 @@ public class StringVariableValue extends VariableValue<String>
         return value.compareTo(variableValue.value);
     }
 
-    @Override
-    public String toString()
-    {
-        return value;
-    }
+
 }

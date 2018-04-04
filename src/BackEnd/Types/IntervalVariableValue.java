@@ -30,17 +30,18 @@ public class IntervalVariableValue<T extends Comparable> extends VariableValue<I
     @Override
     public boolean equals(Object object)
     {
-        return false;
+        IntervalVariableValue<T> variableValue = (IntervalVariableValue<T>) object;
+        return value.equals(variableValue.value);
     }
 
     @Override
     public boolean isLessThan(VariableValue<IntervalUnion<T>> o) {
-        return true;
+        return value.isLessThan(o.value);
     }
 
     @Override
     public boolean isMoreThan(VariableValue<IntervalUnion<T>> o) {
-        return true;
+        return value.isMoreThan(o.value);
     }
 
 
@@ -48,4 +49,5 @@ public class IntervalVariableValue<T extends Comparable> extends VariableValue<I
     public int compareTo(VariableValue<IntervalUnion<T>> o) {
         return 0;
     }
+
 }

@@ -77,6 +77,8 @@ public class Interval<T extends Comparable>
     @Override
     public String toString()
     {
+        if(sup.equals(inf) && includeSup && includeInf)
+            return sup+"";
         String left = (includeInf)?"[":"]";
         String right = (includeSup)?"]":"[";
         return left+" "+inf+","+sup+" "+right;
@@ -88,6 +90,16 @@ public class Interval<T extends Comparable>
         Interval<T> interval = (Interval<T>) o;
         return inf.equals(interval.inf) && sup.equals(interval.sup)
                 && includeInf == interval.includeInf && includeSup == interval.includeSup;
+    }
+
+    public boolean isLessThan(Interval<T> interval)
+    {
+        return inf.compareTo(interval.inf) < 0 || (inf.compareTo(interval.inf) == 0 && includeInf && !interval.includeInf);
+    }
+
+    public boolean isMoreThan(Interval<T> interval)
+    {
+        return sup.compareTo(interval.sup) > 0 || (sup.compareTo(interval.sup) == 0 && includeSup && !interval.includeSup);
     }
 
 }

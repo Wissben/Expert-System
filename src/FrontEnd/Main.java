@@ -3,6 +3,8 @@ package FrontEnd;
 import Agents.AnnexAgent;
 import BackEnd.Expert;
 import BackEnd.SimpleClothRulesInit;
+import BackEnd.Types.IntegerValue;
+import BackEnd.Types.IntervalVariableValue;
 import BackEnd.Types.StringVariableValue;
 import jade.wrapper.StaleProxyException;
 import javafx.application.Application;
@@ -45,6 +47,11 @@ public class Main extends Application {
             System.out.println("\n Looking for " + name + ". User entered: " + answer);
             ruleVariable.setValue(new StringVariableValue(answer));
         });
-        m.addAgent(AnnexAgent.newAgent("agent1",expert)).start();
+//        m.addAgent(AnnexAgent.newAgent("agent1",expert)).start();
+        IntegerValue val = new IntegerValue(15);
+
+        IntegerValue val1 = new IntegerValue(18);
+        System.out.println("val : " + val + " val1 " + val1);
+        System.out.println(val.isMoreThan(val1) + " " + val.isLessThan(val1) + " " +val.equals(val1));
     }
 }
