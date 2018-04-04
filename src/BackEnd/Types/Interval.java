@@ -73,4 +73,13 @@ public class Interval<T extends Comparable>
         String right = (includeSup)?"]":"[";
         return left+" "+inf+","+sup+" "+right;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        Interval<T> interval = (Interval<T>) o;
+        return inf.equals(interval.inf) && sup.equals(interval.sup)
+                && includeInf == interval.includeInf && includeSup == interval.includeSup;
+    }
+
 }

@@ -46,13 +46,13 @@ public class Clause {
                     truth = lhs.value.equals(rhs);
                     break;
                 case 2:
-                    truth = lhs.value.compareTo(rhs) > 0;
+                    truth = lhs.value.isMoreThan(rhs);
                     break;
                 case 3:
-                    truth = lhs.value.compareTo(rhs) < 0;
+                    truth = lhs.value.isLessThan(rhs);
                     break;
                 case 4:
-                    truth = lhs.value.compareTo(rhs) != 0;
+                    truth = !lhs.value.equals(rhs);
                     break;
             }
             return truth;

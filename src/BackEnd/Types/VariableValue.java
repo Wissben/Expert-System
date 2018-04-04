@@ -11,6 +11,8 @@ public abstract class VariableValue<T> implements Comparable<VariableValue<T>>
     public abstract void affect(Condition condition, VariableValue<T> variableValue) throws ConflictException;
     @Override
     public abstract boolean equals(Object object);
-    @Override
-    public abstract int compareTo(VariableValue<T> o);
+
+    public abstract boolean isLessThan(VariableValue<T> o);
+
+    public abstract boolean isMoreThan(VariableValue<T> o);
 }

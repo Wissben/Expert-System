@@ -25,6 +25,18 @@ public class StringVariableValue extends VariableValue<String>
     }
 
     // compared using lexicographical order
+
+    @Override
+    public boolean isLessThan(VariableValue<String> o) {
+        return value.compareTo(o.value) < 0;
+    }
+
+    @Override
+    public boolean isMoreThan(VariableValue<String> o) {
+        return value.compareTo(o.value) > 0;
+    }
+
+
     @Override
     public int compareTo(VariableValue<String> variableValue) {
         return value.compareTo(variableValue.value);
