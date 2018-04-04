@@ -1,10 +1,18 @@
 package FrontEnd;
 
+import Agents.AnnexAgent;
+import BackEnd.Expert;
+import BackEnd.SimpleClothRulesInit;
+import BackEnd.Types.StringVariableValue;
+import jade.wrapper.StaleProxyException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import Environment.ContainerManager;
+
+import java.util.Scanner;
 
 public class Main extends Application {
 
@@ -17,8 +25,26 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
-
+    public static void main(String[] args) throws Exception {
+//        launch(args);
+        ContainerManager m = new ContainerManager();
+        Expert expert = new Expert(new SimpleClothRulesInit(), ruleVariable -> {
+            // method callback when asking user
+            // basically when we have a GUI change implementation here.
+            //
+            // that's how u don't mix front and back ends
+            // so when u start working on GUI and u need live updates
+            // create interfaces with callBack methods that display whatever u want
+            // send them in parameter like this
+            // you might want to create a class that contains all callBacks and send it
+            // if you judge there are too many callbacks to be sent one by one
+            String promptText = ruleVariable.getPromptText();
+            String name = ruleVariable.getName();
+            System.out.println(promptText);
+            String answer = new Scanner(System.in).next(); // getting user input
+            System.out.println("\n Looking for " + name + ". User entered: " + answer);
+            ruleVariable.setValue(new StringVariableValue(answer));
+        });
+        m.addAgent(AnnexAgent.newAgent("agent1",expert)).start();
     }
 }

@@ -5,5 +5,5 @@ package BackEnd;
  */
 public interface AskUserCallBack
 {
-    String askUser(String... params);
+    void askUser(RuleVariable ruleVariable);
 }

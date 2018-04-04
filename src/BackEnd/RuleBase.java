@@ -5,6 +5,8 @@ package BackEnd;/* RuleBase class
 
 */
 
+import BackEnd.Types.VariableValue;
+
 import java.awt.*;
 import java.util.*;
 
@@ -136,7 +138,7 @@ public class RuleBase {
         this.ruleList.remove(rule);
     }
 
-    public void setVariableValue(String variableName, String value)
+    public void setVariableValue(String variableName, VariableValue value)
     {
         RuleVariable ruleVariable = (RuleVariable) getVariableList().get(variableName);
         ruleVariable.setValue(value);

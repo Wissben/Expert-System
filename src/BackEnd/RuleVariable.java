@@ -5,6 +5,8 @@ package BackEnd;/* RuleVariable class
 
 */
 
+import BackEnd.Types.VariableValue;
+
 import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.Vector;
@@ -16,21 +18,9 @@ public class RuleVariable extends Variable {
         clauseRefs = new Vector();
     }
 
-    void setValue(String val) {
+    public void setValue(VariableValue val) {
         value = val;
         updateClauses();
-    }
-
-
-    // prompt a user to provide a value for a variable during inferencing
-    String askUser() {
-//        String answer = RuleApplet.waitForAnswer(promptText, getLabels()); // show dialog
-
-        System.out.println(promptText);
-        String answer = new Scanner(System.in).next();
-        RuleBase.appendText("\n  !!! Looking for " + name + ". User entered: " + answer);
-        setValue(answer); // need to set value from textField here
-        return value;
     }
 
     Vector clauseRefs;   // clauses which refer to this var
@@ -64,6 +54,10 @@ public class RuleVariable extends Variable {
 
     public int normalize(String inValue, float[] outArray, int inx) {
         return inx;
+    }
+
+    public String getPromptText() {
+        return promptText;
     }
 
 }

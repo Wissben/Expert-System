@@ -6,13 +6,15 @@ package BackEnd;/* Variable class
 
 */
 
+import BackEnd.Types.VariableValue;
+
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 public abstract class Variable {
     public String name;
-    String value;
+    VariableValue value;
     int column;
 
     public Variable() {
@@ -24,11 +26,11 @@ public abstract class Variable {
         value = null;
     }
 
-    void setValue(String val) {
+    public void setValue(VariableValue val) {
         value = val;
     }
 
-    String getValue() {
+    VariableValue getValue() {
         return value;
     }
 
@@ -98,4 +100,7 @@ public abstract class Variable {
         return String.valueOf(act[index]);
     }
 
+    public String getName() {
+        return name;
+    }
 }

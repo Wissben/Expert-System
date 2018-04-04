@@ -44,13 +44,11 @@ public class Rule {
         RuleBase.appendText("\nTesting rule " + ruleName);
         for (int i = 0; i < antecedents.size(); i++) {
             if (antecedents.get(i).truth == null) return null;
-            if (antecedents.get(i).truth.booleanValue() == true) {
-                continue;
-            } else {
-                return truth = new Boolean(false); //don�t fire this rule
+            if (!antecedents.get(i).truth) {
+                return truth = Boolean.FALSE; //don�t fire this rule
             }
         } // endfor
-        return truth = new Boolean(true); // could fire this rule
+        return truth = Boolean.TRUE; // could fire this rule
     }
 
     //used by forward chaining only !
@@ -59,7 +57,7 @@ public class Rule {
 //it is references, and then all rules which contain
 //those clauses
     void fire() {
-        truth = new Boolean(true);
+        truth = Boolean.TRUE;
         fired = true;
 //set the variable value and update clauses
         consequent.lhs.setValue(consequent.rhs);
@@ -108,7 +106,7 @@ public class Rule {
                 ruleBase.backwardChain(antecedents.get(i).lhs.name);
             if (antecedents.get(i).truth == null) { // couldn�t prove t or f
                 RuleVariable lhs = antecedents.get(i).lhs;
-                lhs.setValue(userAsker.askUser(lhs.promptText,lhs.name));
+                userAsker.askUser(lhs);
 
                 truth = antecedents.get(i).check(); // redundant?
             }

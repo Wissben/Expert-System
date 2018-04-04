@@ -6,6 +6,8 @@ package BackEnd;/*  Clause class
 
 */
 
+import BackEnd.Types.VariableValue;
+
 import java.util.Vector;
 //import java.io.*;
 
@@ -13,12 +15,12 @@ import java.util.Vector;
 public class Clause {
     Vector ruleRefs;
     RuleVariable lhs;
-    String rhs;
+    VariableValue rhs;
     Condition cond;
     Boolean consequent; // true or false
     Boolean truth;      // states = null(unknown), true or false
 
-    public Clause(RuleVariable Lhs, Condition Cond, String Rhs) {
+    public Clause(RuleVariable Lhs, Condition Cond, VariableValue Rhs) {
 
         lhs = Lhs;
         cond = Cond;

@@ -1,5 +1,7 @@
 package BackEnd;
 
+import BackEnd.Types.StringVariableValue;
+
 import java.util.ArrayList;
 
 /**
@@ -18,12 +20,17 @@ public class SimpleClothRulesInit extends RuleInitializer
 // define rules
 //        ruleBase.setRuleList(new Vector());
         ArrayList<Clause> temporaryLeftClauses = new ArrayList<>();
-        temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get("Position"), cEquals, "Torso"));
-        temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get("Season"), cEquals, "Hto"));
-        temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get("SleeveLength"), cEquals, "Short"));
-        temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get("Material"), cEquals, "Cotton"));
+        temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get("Position"),
+                cEquals, new StringVariableValue("Torso")));
+        temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get("Season"),
+                cEquals, new StringVariableValue("Hto")));
+        temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get("SleeveLength"),
+                cEquals, new StringVariableValue("Short")));
+        temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get("Material"),
+                cEquals, new StringVariableValue("Cotton")));
         Rule Tshirt = new Rule("Tshirt", temporaryLeftClauses,
-                new Clause((RuleVariable) ruleBase.getVariableList().get("Cloth"), cEquals, "Tshirt"));
+                new Clause((RuleVariable) ruleBase.getVariableList().get("Cloth"),
+                        cEquals, new StringVariableValue("Tshirt")));
         ruleBase.addRule(Tshirt);
     }
 

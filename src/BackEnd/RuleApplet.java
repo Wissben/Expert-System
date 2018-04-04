@@ -39,12 +39,12 @@ public class RuleApplet extends Applet {
     // user selected a value for a variable
 //void choice3_Clicked(Event event) 
     void choice3_Clicked(Event event) {
-        String varName = choice2.getSelectedItem();
-        String varValue = choice3.getSelectedItem();
-        RuleVariable rvar =
-                (RuleVariable) currentRuleBase.getVariableList().get(varName);
-        rvar.setValue(varValue);
-        textArea3.appendText("\n" + rvar.name + " set to " + varValue);
+//        String varName = choice2.getSelectedItem();
+//        String varValue = choice3.getSelectedItem();
+//        RuleVariable rvar =
+//                (RuleVariable) currentRuleBase.getVariableList().get(varName);
+//        rvar.setValue(varValue);
+//        textArea3.appendText("\n" + rvar.name + " set to " + varValue);
     }
 
     // user pressed Find button -- do an infernece cycle

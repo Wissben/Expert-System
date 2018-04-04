@@ -1,5 +1,7 @@
 package BackEnd;
 
+import BackEnd.Types.StringVariableValue;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,35 +12,28 @@ public class Expert
 {
     RuleBase ruleBase;
 
-    public Expert(RuleInitializer initializer)
+    public Expert(RuleInitializer initializer,AskUserCallBack userAsker)
     {
-        ruleBase = new RuleBase("RuleBaseTest", params -> {
-            // method callback when asking user, basically when we have a GUI
-            // we use it here.
-            String promptText = params[0];
-            String name = params[1];
-            System.out.println(promptText);
-            String answer = new Scanner(System.in).next(); // getting user input
-            System.out.println("\n  !!! Looking for " + name + ". User entered: " + answer);
-            return answer;
-        });
+        ruleBase = new RuleBase("RuleBaseTest", userAsker);
         initializer.initRuleBase(ruleBase);
     }
 
     // TODO to be removed!!
     public void tryForward()
     {
-        ruleBase.setVariableValue("Position","Torso");
-        ruleBase.setVariableValue("SleeveLength","Short");
-        ruleBase.setVariableValue("Season","Hto");
-        ruleBase.setVariableValue("Material","Cotton");
+        ruleBase.setVariableValue("Position",new StringVariableValue("Torso"));
+        ruleBase.setVariableValue("SleeveLength",new StringVariableValue("Short"));
+        ruleBase.setVariableValue("Season",new StringVariableValue("Hto"));
+        ruleBase.setVariableValue("Material",new StringVariableValue("Cotton"));
         ruleBase.forwardChain();
         ruleBase.displayVariables();
+        ruleBase.displayRules();
+
     }
 
     public void tryBackWard()
     {
-        ruleBase.setVariableValue("Cloth","Tshirt");
+        ruleBase.setVariableValue("Cloth",new StringVariableValue("Tshirt"));
         ruleBase.backwardChain("Cloth");
         ruleBase.displayVariables();
     }
