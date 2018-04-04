@@ -15,6 +15,14 @@ public class Interval<T extends Comparable>
         this.includeInf = includeInf;
     }
 
+    public Interval(T value)
+    {
+        this.sup = value;
+        this.inf = value;
+        this.includeSup = true;
+        this.includeInf = true;
+    }
+
     public Interval<T> intersects(Interval<T> interval)
     {
         T newSup,newInf;
