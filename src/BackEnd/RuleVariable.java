@@ -27,7 +27,7 @@ public class RuleVariable extends Variable {
     public void setValue(VariableValue val,Condition condition) throws ConflictException {
         if(value == null)
             value = val;
-        else value.affect(condition,val);
+        value.affect(condition,val);
         updateClauses();
     }
 

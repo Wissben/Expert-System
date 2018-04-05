@@ -97,10 +97,10 @@ public class IntervalVariableValue<T extends Comparable> extends VariableValue<I
         return value.isMoreThan(o.value);
     }
 
-
     @Override
-    public int compareTo(VariableValue<IntervalUnion<T>> o) {
-        return 0;
+    public VariableValue<IntervalUnion<T>> defaultConstructor() {
+        return new IntervalVariableValue<>(); // full interval
     }
+
 
 }

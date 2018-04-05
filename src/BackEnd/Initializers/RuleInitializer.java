@@ -10,10 +10,10 @@ import java.lang.reflect.InvocationTargetException;
  */
 public abstract class RuleInitializer
 {
-    public void initRuleBase(RuleBase ruleBase) throws NoSuchMethodException, IOException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
+    public void initRuleBase(RuleBase ruleBase){
         initRuleBaseVariables(ruleBase);
         initRuleBaseRules(ruleBase);
     }
-    protected abstract void initRuleBaseRules(RuleBase ruleBase) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+    protected abstract void initRuleBaseRules(RuleBase ruleBase);
     protected abstract void initRuleBaseVariables(RuleBase ruleBase);
 }

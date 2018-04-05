@@ -1,6 +1,8 @@
-package BackEnd;
+package BackEnd.ExpertSys;
 
+import BackEnd.ExpertSys.AskUserCallBack;
 import BackEnd.Initializers.RuleInitializer;
+import BackEnd.RuleBase;
 import BackEnd.Types.DoubleValue;
 import BackEnd.Types.IntegerValue;
 import BackEnd.Types.StringVariableValue;
@@ -15,8 +17,13 @@ public class Expert
 {
     RuleBase ruleBase;
 
-    public Expert(RuleInitializer initializer, AskUserCallBack userAsker) throws NoSuchMethodException, IOException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
+    public Expert(RuleInitializer initializer, AskUserCallBack userAsker){
         ruleBase = new RuleBase("RuleBaseTest", userAsker);
+        initializer.initRuleBase(ruleBase);
+    }
+
+    public void addInitializer(RuleInitializer initializer)
+    {
         initializer.initRuleBase(ruleBase);
     }
 

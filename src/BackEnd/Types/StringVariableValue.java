@@ -36,10 +36,9 @@ public class StringVariableValue extends VariableValue<String>
         return value.compareTo(o.value) > 0;
     }
 
-
     @Override
-    public int compareTo(VariableValue<String> variableValue) {
-        return value.compareTo(variableValue.value);
+    public VariableValue<String> defaultConstructor() {
+        return new StringVariableValue("");
     }
 
 

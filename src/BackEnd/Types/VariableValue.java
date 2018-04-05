@@ -5,7 +5,7 @@ import BackEnd.Condition;
 /**
  * Created by ressay on 03/04/18.
  */
-public abstract class VariableValue<T> implements Comparable<VariableValue<T>>
+public abstract class VariableValue<T>
 {
     protected T value;
     public abstract void affect(Condition condition, VariableValue<T> variableValue) throws ConflictException;
@@ -15,6 +15,8 @@ public abstract class VariableValue<T> implements Comparable<VariableValue<T>>
     public abstract boolean isLessThan(VariableValue<T> o);
 
     public abstract boolean isMoreThan(VariableValue<T> o);
+
+    public abstract VariableValue<T> defaultConstructor();
 
     @Override
     public String toString()

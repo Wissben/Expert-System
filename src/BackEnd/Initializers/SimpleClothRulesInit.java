@@ -22,8 +22,13 @@ public class SimpleClothRulesInit extends RuleInitializer
 
 
     @Override
-    protected void initRuleBaseRules(RuleBase ruleBase) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        RuleParser ruleParser = new RuleParser("/home/wiss/CODES/TP-AGENT/PART1/src/rules");
+    protected void initRuleBaseRules(RuleBase ruleBase){
+        RuleParser ruleParser = null;
+        try {
+            ruleParser = new RuleParser("/home/wiss/CODES/TP-AGENT/PART1/src/rules");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ruleParser.startParsing(ruleBase);
     }
 
