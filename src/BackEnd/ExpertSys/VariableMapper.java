@@ -1,5 +1,6 @@
-package BackEnd;
+package BackEnd.ExpertSys;
 
+import BackEnd.RuleBase;
 import BackEnd.Types.VariableValue;
 
 import java.util.HashMap;
@@ -8,18 +9,16 @@ public class VariableMapper {
 
     private String[] variables;
     private HashMap<String, VariableValue> variableValueHashMap;
-    private RuleBase ruleBase;
 
     public VariableMapper(RuleBase ruleBase) {
-        this.ruleBase=ruleBase;
-        this.variables = new String[this.ruleBase.getVariableList().size()];
+        this.variables = new String[ruleBase.getVariableList().size()];
         this.variableValueHashMap = new HashMap<>();
-        this.setHashMap();
+        this.setHashMap(ruleBase);
     }
 
-    private void setHashMap()
+    private void setHashMap(RuleBase ruleBase)
     {
-        for (Object key : this.ruleBase.getVariableList().keySet()) {
+        for (Object key : ruleBase.getVariableList().keySet()) {
             this.variableValueHashMap.put((String)key, (VariableValue) ruleBase.getVariableList().get(key));
         }
     }
@@ -40,11 +39,4 @@ public class VariableMapper {
         this.variableValueHashMap = variableValueHashMap;
     }
 
-    public RuleBase getRuleBase() {
-        return ruleBase;
-    }
-
-    public void setRuleBase(RuleBase ruleBase) {
-        this.ruleBase = ruleBase;
-    }
 }
