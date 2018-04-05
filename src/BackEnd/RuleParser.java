@@ -14,13 +14,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RuleParser {
-    private HashMap<String, Class<?>> mapTypeNameToClass;
     private HashMap<String, Instantiator> mapClassNameToConstructor;
     private HashMap<String, String> mapRhsToLhs;
-    private ArrayList<String> rulesRawFormat;
-    private ArrayList<Rule> rules;
-    private String delimiter;
-
     public RuleParser(String pathToFile) throws IOException {
         initMapClassNameToConstructor();
         loadRulesFromFile(pathToFile);
@@ -66,7 +61,6 @@ public class RuleParser {
         File inputFile = new File(pathToFile);
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         String line;
-        this.rulesRawFormat = new ArrayList<>();
         String patternModel = "(<.+/.+/./.+>)=(<.+/.+/./.+>,)+";
         Pattern pattern = Pattern.compile(patternModel);
         this.mapRhsToLhs = new HashMap<>();
