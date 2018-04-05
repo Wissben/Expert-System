@@ -3,9 +3,8 @@ package FrontEnd;
 import Agents.AnnexAgent;
 import BackEnd.Condition;
 import BackEnd.Expert;
-import BackEnd.SimpleClothRulesInit;
+import BackEnd.Initializers.SimpleClothRulesInit;
 import BackEnd.Types.*;
-import jade.wrapper.StaleProxyException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +27,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws Exception {
 //        launch(args);
-//        ContainerManager m = new ContainerManager();
+        ContainerManager m = new ContainerManager();
         Expert expert = new Expert(new SimpleClothRulesInit(), ruleVariable -> {
             // method callback when asking user
             // basically when we have a GUI change implementation here.
@@ -46,21 +45,21 @@ public class Main extends Application {
             System.out.println("\n Looking for " + name + ". User entered: " + answer);
             ruleVariable.setValue(new StringVariableValue(answer));
         });
-//        m.addAgent(AnnexAgent.newAgent("agent1",expert)).start();
-        IntegerValue val = new IntegerValue(15);
-
-        IntegerValue val1 = new IntegerValue(18);
-        IntervalUnion<Integer> full = new IntervalUnion<>(new Interval<>());
-        IntervalVariableValue<Integer> halfd = new IntervalVariableValue<>(130,5,true,true);
-        IntervalVariableValue<Integer> halfu = new IntervalVariableValue<>(120,5,true,true);
-        halfd.affect(new Condition("="),val1);
-        System.out.println(halfd.getValue());
-        System.out.println(halfu.getValue());
-        System.out.println("intersection: " + halfd.getValue().intersects(halfu.getValue()));
-        System.out.println("union: " + halfd.getValue().union(halfu.getValue()));
-        System.out.println("remove: " + halfd.getValue().remove(halfu.getValue()));
-        full = full.remove(val.getValue());
-        System.out.println("val : " + val + " val1 " + val1 + " full " + full);
-        System.out.println(halfd.isMoreThan(halfu) + " " + halfd.isLessThan(halfu) + " " +halfd.equals(halfu));
+        m.addAgent(AnnexAgent.newAgent("agent1",expert)).start();
+//        IntegerValue val = new IntegerValue(15);
+//
+//        IntegerValue val1 = new IntegerValue(18);
+//        IntervalUnion<Integer> full = new IntervalUnion<>(new Interval<>());
+//        IntervalVariableValue<Integer> halfd = new IntervalVariableValue<>(130,5,true,true);
+//        IntervalVariableValue<Integer> halfu = new IntervalVariableValue<>(120,5,true,true);
+//        halfd.affect(new Condition("="),val1);
+//        System.out.println(halfd.getValue());
+//        System.out.println(halfu.getValue());
+//        System.out.println("intersection: " + halfd.getValue().intersects(halfu.getValue()));
+//        System.out.println("union: " + halfd.getValue().union(halfu.getValue()));
+//        System.out.println("remove: " + halfd.getValue().remove(halfu.getValue()));
+//        full = full.remove(val.getValue());
+//        System.out.println("val : " + val + " val1 " + val1 + " full " + full);
+//        System.out.println(halfd.isMoreThan(halfu) + " " + halfd.isLessThan(halfu) + " " +halfd.equals(halfu));
     }
 }
