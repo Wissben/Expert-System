@@ -30,8 +30,7 @@ public class RuleParser {
             for (int i = 0; i < lhs.length; i++) {
                 lhs[i] = lhs[i].substring(1, lhs[i].length() - 1);
                 String[] lhsComponent = lhs[i].split("/");
-                // System.out.println(lhsComponent[3]);
-                temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get(lhsComponent[0]),
+                 temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get(lhsComponent[0]),
                         new Condition(lhsComponent[2]), (VariableValue) mapClassNameToConstructor.get(lhsComponent[1]).instantiate(lhsComponent[3])));
             }
 //            System.out.println("RHS " + ruleBase.getVariableList().get(rhs[0]));

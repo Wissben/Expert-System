@@ -33,7 +33,9 @@ public class Main extends Application {
     public static void main(String[] args) throws Exception {
 //        launch(args);
         ContainerManager m = new ContainerManager();
-        AnnexExpert expert = new AnnexExpert(new SimpleClothRulesInit(), new AskUserConsole()
+        String varsPath = "/home/wiss/CODES/TP-AGENT/PART1/src/ruleVariables";
+        String rulesPath = "/home/wiss/CODES/TP-AGENT/PART1/src/rules";
+        AnnexExpert expert = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath,rulesPath), new AskUserConsole()
                 , new FindAgentRuleInitializer() {
             @Override
             protected void initRuleBaseRules(RuleBase ruleBase) {
