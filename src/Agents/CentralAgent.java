@@ -66,6 +66,7 @@ public class CentralAgent extends MessageReceiverAgent
                 VariableMapper mapper = new VariableMapper();
                 mapper.addVariableValue("Article",new StringVariableValue("Skirt"));
                 mapper.addVariableValue("Position",new StringVariableValue("Torso"));
+
                 UIQuery query = new UIQuery(mapper);
                 System.out.println("start answer ");
                 AgentQueryAnswers queryAnswers = answer(query);
