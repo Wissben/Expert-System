@@ -20,8 +20,7 @@ public class RuleParser {
         initMapClassNameToConstructor();
         loadRulesFromFile(pathToFile);
     }
-
-
+    
     public void startParsing(RuleBase ruleBase) {
         for (String key : mapRhsToLhs.keySet()) {
             String[] rhs = key.substring(1, key.length() - 1).split("/"); //<sd/sdsds/sdds>
@@ -30,6 +29,7 @@ public class RuleParser {
             for (int i = 0; i < lhs.length; i++) {
                 lhs[i] = lhs[i].substring(1, lhs[i].length() - 1);
                 String[] lhsComponent = lhs[i].split("/");
+                System.out.println(rhs[3]);
                  temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get(lhsComponent[0]),
                         new Condition(lhsComponent[2]), (VariableValue) mapClassNameToConstructor.get(lhsComponent[1]).instantiate(lhsComponent[3])));
             }
