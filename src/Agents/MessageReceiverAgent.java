@@ -25,4 +25,14 @@ public class MessageReceiverAgent extends Agent
     {
         getMessageBehaviourInstance().addAction(messageAction);
     }
+
+    public void removeMessageAction(MessageReceivingAction messageAction)
+    {
+        getMessageBehaviourInstance().removeAction(messageAction);
+    }
+
+    public boolean containsMessageAction(MessageReceivingAction messageAction)
+    {
+        return getMessageBehaviourInstance().containsMessageAction(messageAction);
+    }
 }

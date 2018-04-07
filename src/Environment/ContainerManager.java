@@ -24,7 +24,7 @@ public class ContainerManager
 
         runtime =Runtime.instance();
         propreties = new ExtendedProperties();
-        propreties.setProperty(Profile.GUI,"true");
+//        propreties.setProperty(Profile.GUI,"true");
         ProfileImpl profileImpl = new ProfileImpl(propreties);
         mainContainer =runtime.createMainContainer(profileImpl);
 //        System.out.println("main container démmare");

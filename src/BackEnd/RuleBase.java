@@ -7,6 +7,7 @@ package BackEnd;/* RuleBase class
 
 import BackEnd.ExpertSys.AskUserCallBack;
 import BackEnd.Types.VariableValue;
+import FrontEnd.Main;
 
 import java.util.*;
 
@@ -32,8 +33,9 @@ public class RuleBase {
 // by setting all variable values to null
 
     public void reset() {
-        for (String var : variableList.keySet())
-            variableList.put(var,null);
+        for (String var : variableList.keySet()) {
+            variableList.get(var).setValue(null);
+        }
     }
 //...
 
@@ -61,6 +63,7 @@ public class RuleBase {
         Enumeration enume = ruleList.elements();
         while (enume.hasMoreElements()) {
             Rule testRule = (Rule) enume.nextElement();
+
             if (test) testRule.check(); // test the rule antecedents
             if (testRule.getTruth() == null) continue;
             // fire the rule only once for now
@@ -141,11 +144,6 @@ public class RuleBase {
             RuleVariable ruleVariable = getVariableList().get(variableName);
             ruleVariable.setValue(value);
         }
-        else {
-            RuleVariable var = new RuleVariable(variableName);
-            var.setValue(value);
-            variableList.put(variableName,var);
-        }
     }
 
     public HashMap<String, RuleVariable> getVariableList() {
@@ -154,6 +152,8 @@ public class RuleBase {
 
     public VariableValue getVariableValue(String variableName)
     {
+        if(variableList.get(variableName) == null)
+            return null;
         return variableList.get(variableName).getValue();
     }
 

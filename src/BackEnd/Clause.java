@@ -8,6 +8,7 @@ package BackEnd;/*  Clause class
 
 import BackEnd.Types.ConflictException;
 import BackEnd.Types.VariableValue;
+import FrontEnd.Main;
 
 import java.util.Vector;
 //import java.io.*;
@@ -72,4 +73,10 @@ public class Clause {
             return (Rule) ruleRefs.firstElement();
         else return null;
     }
-};
+
+    @Override
+    public String toString()
+    {
+        return lhs.getName() + " " + cond.asString() + " " + rhs;
+    }
+}

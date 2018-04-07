@@ -1,5 +1,6 @@
 package BackEnd;
 
+import Agents.ExpertAgent.AgentVariableValue;
 import BackEnd.Types.DoubleValue;
 import BackEnd.Types.IntegerValue;
 import BackEnd.Types.StringVariableValue;
@@ -20,7 +21,8 @@ public class RuleParser {
         initMapClassNameToConstructor();
         loadRulesFromFile(pathToFile);
     }
-    
+
+
     public void startParsing(RuleBase ruleBase) {
         for (String key : mapRhsToLhs.keySet()) {
             String[] rhs = key.substring(1, key.length() - 1).split("/"); //<sd/sdsds/sdds>
@@ -29,13 +31,12 @@ public class RuleParser {
             for (int i = 0; i < lhs.length; i++) {
                 lhs[i] = lhs[i].substring(1, lhs[i].length() - 1);
                 String[] lhsComponent = lhs[i].split("/");
-                System.out.println(rhs[3]);
-                 temporaryLeftClauses.add(new Clause((RuleVariable) ruleBase.getVariableList().get(lhsComponent[0]),
+                 temporaryLeftClauses.add(new Clause(ruleBase.getVariableList().get(lhsComponent[0]),
                         new Condition(lhsComponent[2]), (VariableValue) mapClassNameToConstructor.get(lhsComponent[1]).instantiate(lhsComponent[3])));
             }
 //            System.out.println("RHS " + ruleBase.getVariableList().get(rhs[0]));
             ruleBase.addRule(new Rule(rhs[0], temporaryLeftClauses,
-                    new Clause((RuleVariable) ruleBase.getVariableList().get(rhs[0]),
+                    new Clause(ruleBase.getVariableList().get(rhs[0]),
                             new Condition(rhs[2]), (VariableValue) mapClassNameToConstructor.get(rhs[1]).instantiate(rhs[3]))));
 
         }
@@ -48,6 +49,8 @@ public class RuleParser {
         mapClassNameToConstructor.put("Integer", param -> new IntegerValue(Integer.valueOf(param)));
 
         mapClassNameToConstructor.put("Double", param -> new DoubleValue(Double.valueOf(param)));
+
+        mapClassNameToConstructor.put("Agent", AgentVariableValue::new);
     }
 
     public void loadRulesFromFile(String pathToFile) throws IOException {

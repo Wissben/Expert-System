@@ -24,8 +24,12 @@ public class AgentVariableValue extends VariableValue<List<String >>
 
     @Override
     public void affect(Condition condition, VariableValue<List<String>> variableValue) throws ConflictException {
-        value.addAll(variableValue.getValue());
+        for (String agent : variableValue.getValue())
+            if(!hasAgent(agent))
+                value.add(agent);
+//        value.addAll(variableValue.getValue());
     }
+
 
     @Override
     public boolean equals(Object object) {
@@ -63,5 +67,14 @@ public class AgentVariableValue extends VariableValue<List<String >>
     @Override
     public VariableValue<List<String>> defaultConstructor() {
         return new AgentVariableValue();
+    }
+
+    @Override
+    public String toString()
+    {
+        String result = "";
+        for (String agent : value)
+            result += agent + ", ";
+        return result;
     }
 }
