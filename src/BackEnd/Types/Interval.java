@@ -1,11 +1,12 @@
 package BackEnd.Types;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  * Created by ressay on 04/04/18.
  */
-public class Interval<T extends Comparable>
+public class Interval<T extends Comparable> implements Serializable
 {
     T sup,inf; // null for infinite value
     boolean includeSup,includeInf;

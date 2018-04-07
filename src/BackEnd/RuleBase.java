@@ -12,14 +12,15 @@ import java.util.*;
 
 public class RuleBase {
     String name;
-    private Hashtable variableList; // all variables in the rulebase
+//    private Hashtable variableList; // all variables in the rulebase
+    private HashMap<String,RuleVariable> variableList;
     private Vector ruleList; // list of all rules
     //Clause clausePtr; // working pointer to current clause
     private Stack goalClauseStack; // for goals (cons clauses ) and subgoals
     AskUserCallBack userAsker;
 
     public RuleBase(String Name,AskUserCallBack userAsker) {
-        this.variableList=new Hashtable();
+        this.variableList=new HashMap<>();
         this.ruleList=new Vector();
         this.goalClauseStack = new Stack();
         this.userAsker = userAsker;
@@ -31,12 +32,8 @@ public class RuleBase {
 // by setting all variable values to null
 
     public void reset() {
-        Enumeration enume = variableList.elements();
-        while (enume.hasMoreElements()) {
-            RuleVariable temp = (RuleVariable) enume.nextElement();
-            temp.setValue(null);
-        }
-
+        for (String var : variableList.keySet())
+            variableList.put(var,null);
     }
 //...
 
@@ -93,7 +90,7 @@ public class RuleBase {
     }
 
     public void backwardChain(String goalVarName) {
-        RuleVariable goalVar = (RuleVariable) variableList.get(goalVarName);
+        RuleVariable goalVar = variableList.get(goalVarName);
         Enumeration goalClauses = goalVar.clauseRefs.elements();
         while (goalClauses.hasMoreElements()) {
             Clause goalClause = (Clause) goalClauses.nextElement();
@@ -140,15 +137,30 @@ public class RuleBase {
 
     public void setVariableValue(String variableName, VariableValue value)
     {
-        RuleVariable ruleVariable = (RuleVariable) getVariableList().get(variableName);
-        ruleVariable.setValue(value);
+        if(containsVariable(variableName)) {
+            RuleVariable ruleVariable = getVariableList().get(variableName);
+            ruleVariable.setValue(value);
+        }
+        else {
+            RuleVariable var = new RuleVariable(variableName);
+            var.setValue(value);
+            variableList.put(variableName,var);
+        }
     }
 
-    public Hashtable getVariableList() {
+    public HashMap<String, RuleVariable> getVariableList() {
         return variableList;
     }
 
+    public VariableValue getVariableValue(String variableName)
+    {
+        return variableList.get(variableName).getValue();
+    }
 
+    public boolean containsVariable(String variableName)
+    {
+        return variableList.containsKey(variableName);
+    }
 
 
     public static void appendText(String text) {
@@ -158,9 +170,9 @@ public class RuleBase {
 // for trace purposes  - display all variables and their value
 
     public void displayVariables() {
-        Enumeration enume = variableList.elements();
-        while (enume.hasMoreElements()) {
-            RuleVariable temp = (RuleVariable) enume.nextElement();
+
+        for (String key : variableList.keySet()) {
+            RuleVariable temp = variableList.get(key);
             System.out.println("\n" + temp.name + " value = " + temp.value);
         }
     }

@@ -3,32 +3,51 @@ package BackEnd.ExpertSys;
 import BackEnd.RuleBase;
 import BackEnd.Types.VariableValue;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class VariableMapper {
+public class VariableMapper implements Serializable
+{
 
-    private String[] variables;
+
     private HashMap<String, VariableValue> variableValueHashMap;
 
     public VariableMapper(RuleBase ruleBase) {
-        this.variables = new String[ruleBase.getVariableList().size()];
         this.variableValueHashMap = new HashMap<>();
         this.setHashMap(ruleBase);
     }
 
+    public VariableMapper()
+    {
+
+    }
+
     private void setHashMap(RuleBase ruleBase)
     {
-        for (Object key : ruleBase.getVariableList().keySet()) {
-            this.variableValueHashMap.put((String)key, (VariableValue) ruleBase.getVariableList().get(key));
+        for (String key : ruleBase.getVariableList().keySet()) {
+            this.variableValueHashMap.put(key,ruleBase.getVariableValue(key));
         }
     }
 
-    public String[] getVariables() {
-        return variables;
+    public void initRuleBase(RuleBase ruleBase)
+    {
+        for (String key: variableValueHashMap.keySet())
+            ruleBase.setVariableValue(key,variableValueHashMap.get(key));
     }
 
-    public void setVariables(String[] variables) {
-        this.variables = variables;
+    public String[] getVariables()
+    {
+        return (String[]) variableValueHashMap.keySet().toArray();
+    }
+
+    public void addVariableValue(String variable, VariableValue value)
+    {
+        variableValueHashMap.put(variable,value);
+    }
+
+    public VariableValue getVariableValue(String variable)
+    {
+        return variableValueHashMap.get(variable);
     }
 
     public HashMap<String, VariableValue> getVariableValueHashMap() {

@@ -1,12 +1,13 @@
 package BackEnd.Types;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
  * Created by ressay on 04/04/18.
  */
-public class IntervalUnion<T extends Comparable>
+public class IntervalUnion<T extends Comparable> implements Serializable
 {
     LinkedList<Interval<T>> intervals = new LinkedList<>();
     public IntervalUnion(Interval<T>... intervals)
@@ -18,12 +19,12 @@ public class IntervalUnion<T extends Comparable>
 
     public static IntervalUnion<Integer> singleInt(int value)
     {
-        return new IntervalUnion<>(new Interval<>(value));
+        return new IntervalUnion<Integer>(new Interval<>(value));
     }
 
     public static IntervalUnion<Double> singleDouble(double value)
     {
-        return new IntervalUnion<>(new Interval<>(value));
+        return new IntervalUnion<Double>(new Interval<>(value));
     }
 
     public IntervalUnion<T> supInterval(T value,boolean included)

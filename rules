@@ -1,0 +1,7 @@
+<Article/String/=/Tshirt>=<Position/String/=/Torso>,<Season/String/=/Summer>,<SleeveLength/String/=/Short>,<Material/String/=/Cotton>,
+
+<Article/String/=/Short>=<Price/Double/>/20.2>,<Position/String/=/Torso>,<Season/String/=/Hot>,<SleeveLength/String/=/Short>,<Material/String/=/Cotton>,
+
+<Article/String/=/Hat>=<Price/Double/!=/20.2>,<Season/String/=/Cold>,<SleeveLength/String/=/Short>,<Material/String/=/Cotton>,
+
+<Article/String/=/Skirt>=<Position/String/=/Torso>,<Season/String/=/Hot>,<SleeveLength/String/=/Short>,<Material/String/=/Cotton>,

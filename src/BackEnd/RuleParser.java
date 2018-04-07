@@ -43,17 +43,11 @@ public class RuleParser {
 
     private void initMapClassNameToConstructor() {
         this.mapClassNameToConstructor = new HashMap<>();
-        mapClassNameToConstructor.put("String", param -> {
-            return new StringVariableValue(param);
-        });
+        mapClassNameToConstructor.put("String", StringVariableValue::new);
 
-        mapClassNameToConstructor.put("Integer", param -> {
-            return new IntegerValue(Integer.valueOf(param));
-        });
+        mapClassNameToConstructor.put("Integer", param -> new IntegerValue(Integer.valueOf(param)));
 
-        mapClassNameToConstructor.put("Double", param -> {
-            return new DoubleValue(Double.valueOf(param));
-        });
+        mapClassNameToConstructor.put("Double", param -> new DoubleValue(Double.valueOf(param)));
     }
 
     public void loadRulesFromFile(String pathToFile) throws IOException {

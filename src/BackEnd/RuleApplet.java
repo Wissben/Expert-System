@@ -17,10 +17,10 @@ public class RuleApplet extends Applet {
 //if (rbName.equals("Bugs")) currentRuleBase = bugs ;
 //if (rbName.equals("Plants")) currentRuleBase = plants ;
         currentRuleBase.reset(); // reset the rule base
-        Enumeration vars = currentRuleBase.getVariableList().elements();
-        while (vars.hasMoreElements()) {
-            choice2.addItem(((RuleVariable) vars.nextElement()).name);
-        }
+//        Enumeration vars = currentRuleBase.getVariableList().elements();
+//        while (vars.hasMoreElements()) {
+//            choice2.addItem(((RuleVariable) vars.nextElement()).name);
+//        }
     }
 
     // user selected a variable
