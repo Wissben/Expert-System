@@ -22,6 +22,23 @@ public class Expert
         initializer.initRuleBase(ruleBase);
     }
 
+    public void initVariablesValues(VariableMapper mapper)
+    {
+        mapper.initRuleBase(ruleBase);
+    }
+
+    public void forwardChain(VariableMapper mapper)
+    {
+        initVariablesValues(mapper);
+        ruleBase.forwardChain();
+        ruleBase.displayRules();
+    }
+
+    public void resetVariableValues()
+    {
+        ruleBase.reset();
+    }
+
     public void addInitializer(RuleInitializer initializer)
     {
         initializer.initRuleBase(ruleBase);
@@ -37,7 +54,7 @@ public class Expert
         ruleBase.setVariableValue("Price",new DoubleValue(20.0));
         ruleBase.forwardChain();
         ruleBase.displayVariables();
-        ruleBase.displayRules();
+//        ruleBase.displayRules();
 
     }
 
@@ -48,4 +65,7 @@ public class Expert
         ruleBase.displayVariables();
     }
 
+    public RuleBase getRuleBase() {
+        return ruleBase;
+    }
 }

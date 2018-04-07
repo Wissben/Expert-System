@@ -2,10 +2,12 @@ package BackEnd.Types;
 
 import BackEnd.Condition;
 
+import java.io.Serializable;
+
 /**
  * Created by ressay on 03/04/18.
  */
-public abstract class VariableValue<T>
+public abstract class VariableValue<T> implements Serializable
 {
     protected T value;
     public abstract void affect(Condition condition, VariableValue<T> variableValue) throws ConflictException;
