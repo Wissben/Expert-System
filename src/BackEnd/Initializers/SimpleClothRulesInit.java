@@ -1,13 +1,12 @@
 package BackEnd.Initializers;
 
-import BackEnd.*;
-import BackEnd.Types.IntegerValue;
-import BackEnd.Types.IntervalVariableValue;
-import BackEnd.Types.StringVariableValue;
+import BackEnd.Condition;
+import BackEnd.Database.DBconnection;
+import BackEnd.RuleBase;
+import BackEnd.RuleParser;
+import BackEnd.VariableParser;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 
 /**
  * a class to add rules to a rule base
@@ -15,6 +14,7 @@ import java.util.ArrayList;
  */
 public class SimpleClothRulesInit extends RuleInitializer {
 
+    private DBconnection dbConnection;
     protected static Condition cEquals = new Condition("=");
     protected static Condition cNotEquals = new Condition("!=");
     protected static Condition cLessThan = new Condition("<");
@@ -28,6 +28,7 @@ public class SimpleClothRulesInit extends RuleInitializer {
         try {
             simpleClothRulesInit.ruleParser = new RuleParser(pathToRulesFile);
             simpleClothRulesInit.variableParser =new VariableParser(pathToVariablesFile);
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,5 +52,11 @@ public class SimpleClothRulesInit extends RuleInitializer {
         }
         else
             throw new java.lang.RuntimeException("variableParser NullPointer");
+    }
+
+
+    private void setupDBconnection()
+    {
+
     }
 }

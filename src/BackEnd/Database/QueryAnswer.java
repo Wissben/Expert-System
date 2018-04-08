@@ -1,17 +1,15 @@
 package BackEnd.Database;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 
 /**
  * Created by ressay on 07/04/18.
  */
 public class QueryAnswer implements Serializable
 {
-    Product[] products = null;
+    private Product[] products = null;
     public QueryAnswer()
     {
-
     }
     public QueryAnswer(Product[] products)
     {

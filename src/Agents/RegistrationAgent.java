@@ -79,7 +79,7 @@ public class RegistrationAgent extends MessageReceiverAgent
 
     public void receivedMessageCallBack(ACLMessage msg)
     {
-        System.out.println("is adding");
+//        System.out.println("is adding");
         try {
             Registration.RegistrationMessage content = (Registration.RegistrationMessage) msg.getContentObject();
             String type = content.getType();
@@ -99,12 +99,12 @@ public class RegistrationAgent extends MessageReceiverAgent
     protected void addCentralAgent(AID agent)
     {
         centralAgents.add(agent);
-        System.out.println("added central agent: " + agent.getLocalName());
+//        System.out.println("added central agent: " + agent.getLocalName());
     }
 
     public void addAgent(FindMeInfos infos) throws IOException {
         agentsFindMes.put(infos.agentName,infos.findMe);
-        System.out.println("added annex agent");
+//        System.out.println("added annex agent");
         sendFindMeToAllCentralAgents(infos.agentName);
     }
 
@@ -118,6 +118,7 @@ public class RegistrationAgent extends MessageReceiverAgent
         m.addReceiver(new AID(receiverName,AID.ISLOCALNAME));
         m.setConversationId(CentralAgent.findMeID);
         m.setContentObject(getAgentsFindMe(agentName));
+        System.out.println("sending find me msg from registration agent to " + receiverName);
         send(m);
     }
 

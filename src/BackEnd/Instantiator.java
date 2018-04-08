@@ -2,5 +2,5 @@ package BackEnd;
 
 public interface Instantiator {
 
-    public Object instantiate(String param);
+    Object instantiate(Object param);
 }

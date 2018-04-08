@@ -7,6 +7,7 @@ package BackEnd;/* RuleVariable class
 
 import BackEnd.Types.ConflictException;
 import BackEnd.Types.VariableValue;
+import FrontEnd.Main;
 
 import java.util.Enumeration;
 import java.util.Scanner;

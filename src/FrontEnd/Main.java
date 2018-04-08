@@ -1,13 +1,16 @@
 package FrontEnd;
 
 import Agents.AnnexAgent;
+import Agents.AnnexVendors.FindAgentRuleInitializer1;
 import Agents.CentralAgent;
 import Agents.ExpertAgent.AnnexExpert;
-import Agents.ExpertAgent.FindAgentRuleInitializer;
 import Agents.RegistrationAgent;
 import BackEnd.Condition;
+import BackEnd.Database.DBconnection;
+import BackEnd.Database.RuleBaseToTableConverter;
 import BackEnd.ExpertSys.AskUserConsole;
-import BackEnd.RuleBase;
+import BackEnd.ExpertSys.Expert;
+import BackEnd.Initializers.SimpleClothRulesInit;
 import BackEnd.Types.*;
 import Environment.ContainerManager;
 import javafx.application.Application;
@@ -15,11 +18,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import BackEnd.Initializers.*;
 
 import java.util.Scanner;
 
 public class Main extends Application {
+
+    public static DBconnection dBconnection;
+    public static RuleBaseToTableConverter allArtcilesTableGenerator;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -32,23 +37,26 @@ public class Main extends Application {
 
     public static void main(String[] args) throws Exception {
 //        launch(args);
+
         ContainerManager m = new ContainerManager();
-        String varsPath = "/home/wiss/CODES/TP-AGENT/PART1/src/ruleVariables";
-        String rulesPath = "/home/wiss/CODES/TP-AGENT/PART1/src/rules";
+        String varsPath = "/home/wiss/CODES/TP-AGENT/Expert-System/src/ruleVariables";
+        String rulesPath = "/home/wiss/CODES/TP-AGENT/Expert-System/src/rules";
         AnnexExpert expert = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath,rulesPath), new AskUserConsole()
-                , new FindAgentRuleInitializer() {
-            @Override
-            protected void initRuleBaseRules(RuleBase ruleBase) {
+                , new FindAgentRuleInitializer1("/home/wiss/CODES/TP-AGENT/Expert-System/src/ruleFindMe1"));
+        AnnexExpert expert2 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath,rulesPath), new AskUserConsole()
+                , new FindAgentRuleInitializer1("/home/wiss/CODES/TP-AGENT/Expert-System/src/ruleFindMe2"));
 
-            }
+        initDatabase();
+        allArtcilesTableGenerator = new RuleBaseToTableConverter(expert.getRuleBase(), "test", dBconnection);
+        allArtcilesTableGenerator.createTableQuery();
+//        allArtcilesTableGenerator.getDbQuery().executeCreateQuery();
 
-            @Override
-            protected void initRuleBaseVariables(RuleBase ruleBase) {
-
-            }
-        });
         m.addAgent(RegistrationAgent.newAgent("reg1")).start();
         m.addAgent(AnnexAgent.newAgent("agent1",expert)).start();
+        m.addAgent(AnnexAgent.newAgent("agent2",expert2)).start();
+        Thread.sleep(100);
+        m.addAgent(CentralAgent.newAgent("central1",new Expert())).start();
+
         Scanner s = new Scanner(System.in);
         int x;
         do {
@@ -77,4 +85,19 @@ public class Main extends Application {
         System.out.println("val : " + val + " val1 " + val1 + " full " + full);
         System.out.println(halfd.isMoreThan(halfu) + " " + halfd.isLessThan(halfu) + " " +halfd.equals(halfu));
     }
+    public static boolean debugging = false;
+    public static void print(String str)
+    {
+        if(debugging)
+            System.out.println(str);
+    }
+
+    private static void initDatabase()
+    {
+        dBconnection = new DBconnection("jdbc:mysql://localhost:3306/",
+                "root",
+                "wissben69",
+                "TechAgent");
+    }
+
 }

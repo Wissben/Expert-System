@@ -1,7 +1,6 @@
 package Agents.ExpertAgent;
 
 import BackEnd.Condition;
-import BackEnd.Types.ConflictException;
 import BackEnd.Types.VariableValue;
 
 import java.util.LinkedList;
@@ -23,9 +22,14 @@ public class AgentVariableValue extends VariableValue<List<String >>
     }
 
     @Override
-    public void affect(Condition condition, VariableValue<List<String>> variableValue) throws ConflictException {
-        value.addAll(variableValue.getValue());
+    public void affect(Condition condition, VariableValue<List<String>> variableValue)
+    {
+        for (String agent : variableValue.getValue())
+            if(!hasAgent(agent))
+                value.add(agent);
+//        value.addAll(variableValue.getValue());
     }
+
 
     @Override
     public boolean equals(Object object) {
@@ -63,5 +67,21 @@ public class AgentVariableValue extends VariableValue<List<String >>
     @Override
     public VariableValue<List<String>> defaultConstructor() {
         return new AgentVariableValue();
+    }
+
+    @Override
+    public String toString()
+    {
+        String result = "";
+        for (String agent : value)
+            result += agent + ", ";
+        return result;
+    }
+
+
+    @Override
+    public String getCondition(String name)
+    {
+        return null;
     }
 }

@@ -103,4 +103,20 @@ public class IntervalVariableValue<T extends Comparable> extends VariableValue<I
     }
 
 
+    @Override
+    public String getCondition(String name)
+    {
+        IntervalUnion<T> union = getValue();
+        String condition = "(";
+        for (Interval<T> interval : union.intervals)
+        {
+            String s = (interval.includeInf) ? ">=" : ">";
+            String i = (interval.includeSup) ? "<=" : "<";
+            condition += "((" + name + s + interval.inf + ") AND ";
+            condition += "(" + name + i + interval.sup + ")) OR";
+        }
+        condition = condition.substring(0, condition.length() - 3);
+        condition += ")";
+        return condition;
+    }
 }

@@ -30,7 +30,8 @@ public abstract class Variable {
         value = val;
     }
 
-    VariableValue getValue() {
+    public VariableValue getValue()
+    {
         return value;
     }
 
@@ -76,11 +77,7 @@ public abstract class Variable {
 
 
     boolean categorical() {
-        if (labels != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return labels != null;
     }
 
     // used by the DataSet class
