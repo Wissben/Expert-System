@@ -5,12 +5,12 @@ import BackEnd.Condition;
 /**
  * Created by ressay on 04/04/18.
  */
-public class StringVariableValue extends VariableValue<String>
+public class StringVariableValue extends VariableValue<String> implements VariableValueCondition
 {
+
     public StringVariableValue(String val) {
         this.value = val;
     }
-
     @Override
     public void affect(Condition condition, VariableValue<String> variableValue) throws ConflictException
     {
@@ -42,4 +42,8 @@ public class StringVariableValue extends VariableValue<String>
     }
 
 
+    @Override
+    public String getCondition(VariableValue variableValue) {
+        return "="+this.value;
+    }
 }

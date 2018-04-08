@@ -4,6 +4,8 @@ import Agents.Behaviours.MessageReceivingAction;
 import Agents.Behaviours.RegistrationWait;
 import Agents.Behaviours.ReplyFindMe;
 import Agents.ExpertAgent.AnnexExpert;
+import BackEnd.Database.DBQuerry;
+import BackEnd.Database.DBconnection;
 import BackEnd.Database.QueryAnswer;
 import BackEnd.ExpertSys.VariableMapper;
 import FrontEnd.UIQuery;
@@ -19,6 +21,7 @@ import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by ressay on 03/04/18.
@@ -28,6 +31,7 @@ public class AnnexAgent extends MessageReceiverAgent
     private AnnexExpert expert;
     public static String annexSellService = "annexSeller";
     public static String requestAnswer = "requestAnswer";
+    private DBconnection dbConnection;
     public static AgentDescription newAgent(String name,AnnexExpert expert)
     {
         Object[] arguments = new Object[1];
@@ -38,6 +42,12 @@ public class AnnexAgent extends MessageReceiverAgent
     @Override
     public void setup()
     {
+
+        //Setting up dataBaseHere
+        setupDBconnection();
+
+        System.out.println(dbConnection);
+
         // agents arguments
         readArguments();
         // generate infos of how to find this agent from a query
@@ -112,6 +122,7 @@ public class AnnexAgent extends MessageReceiverAgent
     public QueryAnswer queryDataBase(VariableMapper features)
     {
         // TODO query database
+
         return new QueryAnswer();
     }
 
@@ -165,5 +176,24 @@ public class AnnexAgent extends MessageReceiverAgent
     {
         try { DFService.deregister(this); }
         catch (Exception e) {}
+    }
+
+
+    private void setupDBconnection()
+    {
+        this.dbConnection=new DBconnection("jdbc:mysql://localhost:3306/",
+                "root",
+                "wissben69",
+                "TechAgent");
+
+
+        /**For testing only**/
+        DBQuerry dbQuerry = new DBQuerry(this.dbConnection);
+        ArrayList<String> component = new ArrayList<>();
+        component.add("id int NOT NULL PRIMARY KEY");
+        component.add("name varchar(255)");
+        component.add("date date");
+        dbQuerry.createTableQuerry("Article",component);
+
     }
 }

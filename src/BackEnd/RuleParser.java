@@ -20,7 +20,7 @@ public class RuleParser {
         initMapClassNameToConstructor();
         loadRulesFromFile(pathToFile);
     }
-    
+
     public void startParsing(RuleBase ruleBase) {
         for (String key : mapRhsToLhs.keySet()) {
             String[] rhs = key.substring(1, key.length() - 1).split("/"); //<sd/sdsds/sdds>
