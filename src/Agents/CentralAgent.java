@@ -7,9 +7,15 @@ import Agents.ExpertAgent.AgentVariableValue;
 import Agents.ExpertAgent.FindAgentRuleInitializer;
 import BackEnd.Database.QueryAnswer;
 import BackEnd.ExpertSys.Expert;
+import BackEnd.ExpertSys.VariableMapper;
+import BackEnd.Initializers.RuleInitializer;
+import BackEnd.Types.StringVariableValue;
+import FrontEnd.Main;
 import FrontEnd.UIQuery;
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -20,6 +26,7 @@ import jade.lang.acl.UnreadableException;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * Created by ressay on 03/04/18.
@@ -52,47 +59,98 @@ public class CentralAgent extends MessageReceiverAgent
         addMessageAction(new CentralReceiveFindMe(this)); // to receive new AnnexAgent's FindMes
         requestAllAvailableRuleInitializers(); // request FindMes of already registered annexAgents
 
+        addBehaviour(new TickerBehaviour(this,2000) {
+
+            @Override
+            protected void onTick() {
+                VariableMapper mapper = new VariableMapper();
+                mapper.addVariableValue("Article",new StringVariableValue("Skirt"));
+                mapper.addVariableValue("Position",new StringVariableValue("Torso"));
+
+                UIQuery query = new UIQuery(mapper);
+                System.out.println("start answer ");
+                AgentQueryAnswers queryAnswers = answer(query);
+                System.out.println("end answer ");
+                for (String agent : queryAnswers.getAgents())
+                    System.out.println("received 1 from "+ agent);
+            }
+        });
+//        try {
+
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            Thread.sleep(1000);
+//            System.out.println("sending 2");
+//            VariableMapper mapper = new VariableMapper();
+//            mapper.addVariableValue("Article",new StringVariableValue("Skirt"));
+//            UIQuery query = new UIQuery(mapper);
+//            AgentQueryAnswers queryAnswers = answer(query);
+//            for (String agent : queryAnswers.getAgents())
+//                System.out.println("received 2 from "+ agent);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            Thread.sleep(1000);
+//            System.out.println("sending 3");
+//            VariableMapper mapper = new VariableMapper();
+//            mapper.addVariableValue("Article",new StringVariableValue("Skirt"));
+//            mapper.addVariableValue("Position",new StringVariableValue("Torso"));
+//            UIQuery query = new UIQuery(mapper);
+//            AgentQueryAnswers queryAnswers = answer(query);
+//            for (String agent : queryAnswers.getAgents())
+//                System.out.println("received 3 from "+ agent);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
 
     public AgentQueryAnswers answer(UIQuery query) {
         AgentQueryAnswers answer = new AgentQueryAnswers();
-        expert.resetVariableValues();
+//        System.out.println("showing rules ***********");
+//        expert.getRuleBase().displayRules();
+//        System.out.println("showing rules ***********");
+        Main.debugging = true;
+        prepareExpert();
+        Main.debugging = false;
+
         // look for annexAgents that can answer query
         expert.forwardChain(query.getMapper());
         // get agents resulted from the forwardChain
         AgentVariableValue agvv = (AgentVariableValue) expert.getRuleBase().getVariableValue(agentVariableValue);
+        if(agvv == null || agvv.getValue() == null)
+            return new AgentQueryAnswers();
         int numberOfAgents = agvv.getValue().size();
 
+        System.out.println("passed here!!");
 
-        // prepare message replier to "requestAnswer" conversation
-        MessageTemplate template = MessageTemplate.MatchConversationId(AnnexAgent.requestAnswer);
-        // what to do when the annex agent answers
 
-        addMessageAction(new MessageReceivingAction(template) {
-            int repliedAgents = 0;
-            @Override
-            public boolean action(ACLMessage msg) {
-                try {
-                    QueryAnswer qans = (QueryAnswer) msg.getContentObject();
-                    answer.addAnswer(msg.getSender().getLocalName(),qans);
-                    repliedAgents++;
-                } catch (UnreadableException e) {
-                    e.printStackTrace();
-                }
-                return repliedAgents == numberOfAgents; // if we reach number of agents, we stop this action
-            }
-        });
 
         // request from all possible agents
         for (String agentName : agvv.getValue())
             requestAnswerFromAgent(agentName,query);
+        // prepare message replier to "requestAnswer" conversation
+        MessageTemplate template = MessageTemplate.MatchConversationId(AnnexAgent.requestAnswer);
+        // what to do when the annex agent answers
 
-        // TODO change this to not only wait, but if all agents replied, then stop waiting
-        try {
-            Thread.sleep(300); // wait for answers
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        int repliedAgents = 0;
+        while (repliedAgents != numberOfAgents)
+        {
+            ACLMessage msg = blockingReceive(template);
+            System.out.println("received answer!");
+            QueryAnswer qans = null;
+            try {
+                qans = (QueryAnswer) msg.getContentObject();
+            } catch (UnreadableException e) {
+                e.printStackTrace();
+            }
+            answer.addAnswer(msg.getSender().getLocalName(),qans);
+            repliedAgents++;
         }
         // by this time answer should contain all annexAgents replies
         return answer;
@@ -108,15 +166,25 @@ public class CentralAgent extends MessageReceiverAgent
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        System.out.println("sending to: "+name);
+        System.out.println("requesting answer from " + agentName);
         send(m);
     }
 
 
     public void addRuleInitializer(FindAgentRuleInitializer initializer)
     {
+        Main.debugging = true;
         expert.addInitializer(initializer);
         ruleInitializers.add(initializer);
+        Main.debugging = false;
+    }
+
+    public void prepareExpert()
+    {
+        expert.initRuleBase();
+        for(RuleInitializer ruleInitializer : ruleInitializers)
+            expert.addInitializer(ruleInitializer);
+
     }
 
     public void requestAllAvailableRuleInitializers()

@@ -19,7 +19,7 @@ public class VariableMapper implements Serializable
 
     public VariableMapper()
     {
-
+        this.variableValueHashMap = new HashMap<>();
     }
 
     private void setHashMap(RuleBase ruleBase)
@@ -56,6 +56,11 @@ public class VariableMapper implements Serializable
 
     public void setVariableValueHashMap(HashMap<String, VariableValue> variableValueHashMap) {
         this.variableValueHashMap = variableValueHashMap;
+    }
+
+    public void clear()
+    {
+        variableValueHashMap.clear();
     }
 
 }

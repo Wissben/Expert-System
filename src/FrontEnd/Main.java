@@ -1,12 +1,14 @@
 package FrontEnd;
 
 import Agents.AnnexAgent;
+import Agents.AnnexVendors.FindAgentRuleInitializer1;
 import Agents.CentralAgent;
 import Agents.ExpertAgent.AnnexExpert;
 import Agents.ExpertAgent.FindAgentRuleInitializer;
 import Agents.RegistrationAgent;
 import BackEnd.Condition;
 import BackEnd.ExpertSys.AskUserConsole;
+import BackEnd.ExpertSys.Expert;
 import BackEnd.RuleBase;
 import BackEnd.Types.*;
 import Environment.ContainerManager;
@@ -36,19 +38,15 @@ public class Main extends Application {
         String varsPath = "/home/wiss/CODES/TP-AGENT/PART1/src/ruleVariables";
         String rulesPath = "/home/wiss/CODES/TP-AGENT/PART1/src/rules";
         AnnexExpert expert = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath,rulesPath), new AskUserConsole()
-                , new FindAgentRuleInitializer() {
-            @Override
-            protected void initRuleBaseRules(RuleBase ruleBase) {
-
-            }
-
-            @Override
-            protected void initRuleBaseVariables(RuleBase ruleBase) {
-
-            }
-        });
+                , new FindAgentRuleInitializer1("ruleFindMe1"));
+        AnnexExpert expert2 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath,rulesPath), new AskUserConsole()
+                , new FindAgentRuleInitializer1("ruleFindMe2"));
         m.addAgent(RegistrationAgent.newAgent("reg1")).start();
         m.addAgent(AnnexAgent.newAgent("agent1",expert)).start();
+        m.addAgent(AnnexAgent.newAgent("agent2",expert2)).start();
+        Thread.sleep(100);
+        m.addAgent(CentralAgent.newAgent("central1",new Expert())).start();
+
         Scanner s = new Scanner(System.in);
         int x;
         do {
@@ -76,5 +74,11 @@ public class Main extends Application {
         full = full.remove(val.getValue());
         System.out.println("val : " + val + " val1 " + val1 + " full " + full);
         System.out.println(halfd.isMoreThan(halfu) + " " + halfd.isLessThan(halfu) + " " +halfd.equals(halfu));
+    }
+    public static boolean debugging = false;
+    public static void print(String str)
+    {
+        if(debugging)
+            System.out.println(str);
     }
 }

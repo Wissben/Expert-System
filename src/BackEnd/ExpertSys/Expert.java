@@ -6,6 +6,7 @@ import BackEnd.RuleBase;
 import BackEnd.Types.DoubleValue;
 import BackEnd.Types.IntegerValue;
 import BackEnd.Types.StringVariableValue;
+import FrontEnd.Main;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -16,11 +17,28 @@ import java.lang.reflect.InvocationTargetException;
 public class Expert
 {
     RuleBase ruleBase;
-
+    RuleInitializer initializer;
+    AskUserCallBack userAsker;
     public Expert(RuleInitializer initializer, AskUserCallBack userAsker){
+        this.initializer = initializer;
+        this.userAsker = userAsker;
+        initRuleBase();
+    }
+
+    public Expert()
+    {
+        userAsker = new AskUserConsole();
+        initRuleBase();
+    }
+
+    public void initRuleBase()
+    {
         ruleBase = new RuleBase("RuleBaseTest", userAsker);
+        if(initializer != null)
         initializer.initRuleBase(ruleBase);
     }
+
+
 
     public void initVariablesValues(VariableMapper mapper)
     {
@@ -31,7 +49,6 @@ public class Expert
     {
         initVariablesValues(mapper);
         ruleBase.forwardChain();
-        ruleBase.displayRules();
     }
 
     public void resetVariableValues()

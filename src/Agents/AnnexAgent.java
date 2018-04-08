@@ -91,7 +91,7 @@ public class AnnexAgent extends MessageReceiverAgent
             }
         });
 
-        expert.tryForward();
+//        expert.tryForward();
     }
 
     public void sendAnswerToQuery(String requester, UIQuery query)
@@ -107,6 +107,7 @@ public class AnnexAgent extends MessageReceiverAgent
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("annexAgent sending answer");
         send(m);
     }
 

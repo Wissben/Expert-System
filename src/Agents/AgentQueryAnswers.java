@@ -40,4 +40,12 @@ public class AgentQueryAnswers
     {
         return agents.get(answers.indexOf(answer));
     }
+
+    public LinkedList<QueryAnswer> getAnswers() {
+        return answers;
+    }
+
+    public LinkedList<String> getAgents() {
+        return agents;
+    }
 }

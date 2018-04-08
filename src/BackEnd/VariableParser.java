@@ -19,6 +19,9 @@ public class VariableParser {
     public void startParsing(RuleBase ruleBase) {
         for (String key : this.mapRuleVarNameToValues.keySet()) {
             RuleVariable temp = new RuleVariable(key);
+            if(ruleBase.containsVariable(key))
+                temp = ruleBase.getVariableList().get(key);
+
             String labels = "";
             for (int i = 0; i < mapRuleVarNameToValues.get(key).length; i++) {
                 labels += mapRuleVarNameToValues.get(key)[i]+" ";
