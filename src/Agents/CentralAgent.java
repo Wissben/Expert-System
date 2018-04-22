@@ -13,7 +13,7 @@ import BackEnd.Types.DoubleValue;
 import BackEnd.Types.IntervalVariableValue;
 import BackEnd.Types.StringVariableValue;
 import FrontEnd.Main;
-import FrontEnd.UIQuery;
+import FrontEnd.UI.UIQuery;
 import jade.core.AID;
 import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
@@ -65,10 +65,10 @@ public class CentralAgent extends MessageReceiverAgent
                 VariableMapper mapper = new VariableMapper();
                 mapper.addVariableValue("Article",new StringVariableValue("Skirt"));
                 mapper.addVariableValue("Position",new StringVariableValue("Torso"));
-                IntervalVariableValue value = new IntervalVariableValue(26.0, 15.0, false, true);
+                IntervalVariableValue value = new IntervalVariableValue(260000.0, 15.0, false, true);
                 try
                 {
-                    value.affect(new Condition("!="), new DoubleValue(20));
+                    value.affect(new Condition("!="), new DoubleValue(5000.0));
                 } catch (ConflictException e)
                 {
                     e.printStackTrace();

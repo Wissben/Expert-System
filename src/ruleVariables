@@ -23,3 +23,5 @@
 <Agents:Agent></Agents>
 
 <Usages:String>Sport,Casual,Protection,Accessory,</Usage>
+
+<Quality:String>Low,Average,High,VeryHigh,</Quality>

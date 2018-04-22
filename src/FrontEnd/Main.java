@@ -5,42 +5,43 @@ import Agents.AnnexVendors.FindAgentRuleInitializer1;
 import Agents.CentralAgent;
 import Agents.ExpertAgent.AnnexExpert;
 import Agents.RegistrationAgent;
-import BackEnd.Condition;
 import BackEnd.Database.DBconnection;
 import BackEnd.Database.RuleBaseToTableConverter;
 import BackEnd.ExpertSys.AskUserConsole;
 import BackEnd.ExpertSys.Expert;
 import BackEnd.Initializers.SimpleClothRulesInit;
-import BackEnd.Types.*;
 import Environment.ContainerManager;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.util.Scanner;
 
-public class Main extends Application {
+public class Main
+{
 
     public static DBconnection dBconnection;
     public static RuleBaseToTableConverter allArtcilesTableGenerator;
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-    }
-
+    public static String varsPath = "/home/wiss/CODES/TP-AGENT/Expert-System/src/ruleVariables";
+    public static String rulesPath = "/home/wiss/CODES/TP-AGENT/Expert-System/src/rules";
+    //    static void tryIntervals() throws ConflictException {
+//        IntegerValue val = new IntegerValue(15);
+//
+//        IntegerValue val1 = new IntegerValue(18);
+//        IntervalUnion<Integer> full = new IntervalUnion<>(new Interval<>());
+//        IntervalVariableValue<Integer> halfd = new IntervalVariableValue<>(130,5,true,true);
+//        IntervalVariableValue<Integer> halfu = new IntervalVariableValue<>(120,5,true,true);
+//        halfd.affect(new Condition("="),val1);
+//        System.out.println(halfd.getValue());
+//        System.out.println(halfu.getValue());
+//        System.out.println("intersection: " + halfd.getValue().intersects(halfu.getValue()));
+//        System.out.println("union: " + halfd.getValue().union(halfu.getValue()));
+//        System.out.println("remove: " + halfd.getValue().remove(halfu.getValue()));
+//        full = full.remove(val.getValue());
+//        System.out.println("val : " + val + " val1 " + val1 + " full " + full);
+//        System.out.println(halfd.isMoreThan(halfu) + " " + halfd.isLessThan(halfu) + " " +halfd.equals(halfu));
+//    }
+    public static boolean debugging = false;
 
     public static void main(String[] args) throws Exception {
-//        launch(args);
-
         ContainerManager m = new ContainerManager();
-        String varsPath = "/home/wiss/CODES/TP-AGENT/Expert-System/src/ruleVariables";
-        String rulesPath = "/home/wiss/CODES/TP-AGENT/Expert-System/src/rules";
         AnnexExpert expert = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath,rulesPath), new AskUserConsole()
                 , new FindAgentRuleInitializer1("/home/wiss/CODES/TP-AGENT/Expert-System/src/ruleFindMe1"));
         AnnexExpert expert2 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath,rulesPath), new AskUserConsole()
@@ -49,7 +50,7 @@ public class Main extends Application {
         initDatabase();
         allArtcilesTableGenerator = new RuleBaseToTableConverter(expert.getRuleBase(), "test", dBconnection);
         allArtcilesTableGenerator.createTableQuery();
-//        allArtcilesTableGenerator.getDbQuery().executeCreateQuery();
+//        allArtcilesTableGenerator.getDbQuery().executeUpdateQuery();
 
         m.addAgent(RegistrationAgent.newAgent("reg1")).start();
         m.addAgent(AnnexAgent.newAgent("agent1",expert)).start();
@@ -67,25 +68,6 @@ public class Main extends Application {
                 m.addAgent(CentralAgent.newAgent("central"+x,expert)).start();
         }while (x != 0);
     }
-
-    static void tryIntervals() throws ConflictException {
-        IntegerValue val = new IntegerValue(15);
-
-        IntegerValue val1 = new IntegerValue(18);
-        IntervalUnion<Integer> full = new IntervalUnion<>(new Interval<>());
-        IntervalVariableValue<Integer> halfd = new IntervalVariableValue<>(130,5,true,true);
-        IntervalVariableValue<Integer> halfu = new IntervalVariableValue<>(120,5,true,true);
-        halfd.affect(new Condition("="),val1);
-        System.out.println(halfd.getValue());
-        System.out.println(halfu.getValue());
-        System.out.println("intersection: " + halfd.getValue().intersects(halfu.getValue()));
-        System.out.println("union: " + halfd.getValue().union(halfu.getValue()));
-        System.out.println("remove: " + halfd.getValue().remove(halfu.getValue()));
-        full = full.remove(val.getValue());
-        System.out.println("val : " + val + " val1 " + val1 + " full " + full);
-        System.out.println(halfd.isMoreThan(halfu) + " " + halfd.isLessThan(halfu) + " " +halfd.equals(halfu));
-    }
-    public static boolean debugging = false;
     public static void print(String str)
     {
         if(debugging)

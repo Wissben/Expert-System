@@ -9,7 +9,7 @@ import BackEnd.Database.QueryAnswer;
 import BackEnd.Database.QueryToProductsConverter;
 import BackEnd.ExpertSys.VariableMapper;
 import FrontEnd.Main;
-import FrontEnd.UIQuery;
+import FrontEnd.UI.UIQuery;
 import jade.core.AID;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -131,7 +131,6 @@ public class AnnexAgent extends MessageReceiverAgent
         FeaturesToQuerryConverter featuresToQuerryConverter =
                 new FeaturesToQuerryConverter(features, Main.allArtcilesTableGenerator);
         featuresToQuerryConverter.generateQuery();
-
         QueryToProductsConverter queryToProductsConverter =
                 new QueryToProductsConverter(featuresToQuerryConverter);
         Product[] products = queryToProductsConverter.queryDB();

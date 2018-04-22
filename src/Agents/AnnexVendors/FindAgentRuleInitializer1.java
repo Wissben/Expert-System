@@ -4,6 +4,7 @@ import Agents.ExpertAgent.FindAgentRuleInitializer;
 import BackEnd.RuleBase;
 import BackEnd.RuleParser;
 import BackEnd.VariableParser;
+import FrontEnd.Main;
 
 import java.io.IOException;
 
@@ -31,7 +32,7 @@ public class FindAgentRuleInitializer1 extends FindAgentRuleInitializer
     @Override
     protected void initRuleBaseVariables(RuleBase ruleBase) {
         try {
-            VariableParser variableParser = new VariableParser("ruleVariables");
+            VariableParser variableParser = new VariableParser(Main.varsPath);
             variableParser.startParsing(ruleBase);
         } catch (IOException e) {
             e.printStackTrace();

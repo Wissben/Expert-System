@@ -48,3 +48,16 @@
 
 <Article/String/=/Bra>=<Article/String/=/Underwear>,<Usages/String/=/Casual>,<Gender/String/=/Female>,<Position/String/=/Torso>,<Material/String/=/Cotton>,<Size/String/=/Medium>,
 
+<Quality/String/=/Low>=<Price/Double/<=/2000.0>,<Usages/String/=/Casual>,
+
+<Quality/String/=/Average>=<Price/Double/>=/2000.0>,<Price/Double/<=/6000.0>,<Usages/String/=/Casual>,
+
+<Quality/String/=/High>=<Price/Double/>=/6000.0>,<Usages/String/=/Casual>,
+
+<Usages/String/=/Accessory>=<Material/String/=/Metal>,<Size/String/=/Small>,
+
+<Usages/String/=/Accessory>=<Size/String/=/Small>,<Position/String/=/Head>,
+
+<Usages/String/=/Accessory>=<Size/String/=/Small>,<Position/String/=/Wrist>,
+
+<Usages/String/=/Accessory>=<Size/String/=/Small>,<Position/String/=/Hand>,

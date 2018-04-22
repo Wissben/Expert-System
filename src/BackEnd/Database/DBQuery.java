@@ -25,6 +25,7 @@ public class DBQuery
         ResultSet resultSet = null;
         try
         {
+            System.out.println("HJZHEJZHEJZHEJHEHZEZ" + dbConnection);
             Statement command = this.dbConnection.getConnection().createStatement();
             resultSet = command.executeQuery(this.query);
         } catch (SQLException e)
