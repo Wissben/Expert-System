@@ -42,6 +42,7 @@ public class VariableMapper implements Serializable
 
     public void addVariableValue(String variable, VariableValue value)
     {
+        if(value != null)
         variableValueHashMap.put(variable,value);
     }
 
@@ -61,6 +62,17 @@ public class VariableMapper implements Serializable
     public void clear()
     {
         variableValueHashMap.clear();
+    }
+
+    @Override
+    public String toString()
+    {
+        String result = "";
+        for (String var : getVariables())
+        {
+            result += var + " => " + getVariableValue(var) + "\n";
+        }
+        return result;
     }
 
 }

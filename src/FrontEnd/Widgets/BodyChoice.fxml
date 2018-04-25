@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.QuadCurve?>
+
+<AnchorPane prefHeight="334.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Widgets.BodyChoice">
+    <children>
+        <Circle fx:id="head" fill="#c7d3dd" layoutX="135.0" layoutY="42.0" radius="30.0" stroke="#c7d3dd" strokeType="INSIDE" />
+        <Ellipse fx:id="torso" fill="#c7d3dd" layoutX="135.0" layoutY="138.0" radiusX="45.0" radiusY="57.0" stroke="#c7d3dd" strokeType="INSIDE" />
+        <QuadCurve fx:id="rightLeg" controlX="25.0" controlY="200.0" endX="55.0" fill="#c7d3dd" layoutX="138.0" layoutY="197.0" rotate="-10.0" scaleX="0.5" stroke="#c7d3dd" strokeType="INSIDE" />
+        <QuadCurve fx:id="leftLeg" controlX="25.0" controlY="200.0" endX="55.0" fill="#c7d3dd" layoutX="78.0" layoutY="197.0" rotate="10.0" scaleX="0.5" stroke="#c7d3dd" strokeType="INSIDE" />
+        <QuadCurve fx:id="leftHand" controlX="25.0" controlY="200.0" endX="55.0" fill="#c7d3dd" layoutX="22.0" layoutY="46.0" rotate="110.0" scaleX="0.4" scaleY="0.8" stroke="#c7d3dd" strokeType="INSIDE" />
+        <QuadCurve fx:id="rightHand" controlX="25.0" controlY="200.0" endX="55.0" fill="#c7d3dd" layoutX="194.0" layoutY="46.0" rotate="-110.0" scaleX="0.4" scaleY="0.8" stroke="#c7d3dd" strokeType="INSIDE" />
+        <Ellipse fx:id="leftFoot" fill="#c7d3dd" layoutX="91.0" layoutY="299.0" radiusX="22.0" radiusY="14.0" rotate="-30.0" stroke="#c7d3dd" strokeType="INSIDE" />
+        <Ellipse fx:id="rightFoot" fill="#c7d3dd" layoutX="180.0" layoutY="299.0" radiusX="22.0" radiusY="14.0" rotate="30.0" stroke="#c7d3dd" strokeType="INSIDE" />
+    </children>
+</AnchorPane>

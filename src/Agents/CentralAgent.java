@@ -3,19 +3,16 @@ package Agents;
 import Agents.Behaviours.CentralReceiveFindMe;
 import Agents.ExpertAgent.AgentVariableValue;
 import Agents.ExpertAgent.FindAgentRuleInitializer;
-import BackEnd.Condition;
+import BackEnd.Database.Product;
 import BackEnd.Database.QueryAnswer;
 import BackEnd.ExpertSys.Expert;
 import BackEnd.ExpertSys.VariableMapper;
 import BackEnd.Initializers.RuleInitializer;
-import BackEnd.Types.ConflictException;
-import BackEnd.Types.DoubleValue;
-import BackEnd.Types.IntervalVariableValue;
-import BackEnd.Types.StringVariableValue;
 import FrontEnd.Main;
 import FrontEnd.UI.UIQuery;
+import FrontEnd.AttributeChoice;
 import jade.core.AID;
-import jade.core.behaviours.TickerBehaviour;
+import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -28,6 +25,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /**
+ *
  * Created by ressay on 03/04/18.
  */
 public class CentralAgent extends MessageReceiverAgent
@@ -35,6 +33,7 @@ public class CentralAgent extends MessageReceiverAgent
     Expert expert;
     public static String findMeID = "findMe";
     public static String agentVariableValue = "Agents";
+    AttributeChoice controller = null;
     LinkedList<FindAgentRuleInitializer> ruleInitializers = new LinkedList<>();
 
     public static AgentDescription newAgent(String name,Expert expert)
@@ -56,66 +55,35 @@ public class CentralAgent extends MessageReceiverAgent
         Registration reg = new Registration(this,null,CentralAgent.class.getName());
         reg.registerMe(); // to receive FindMes when a new annexAgent is added
         addMessageAction(new CentralReceiveFindMe(this)); // to receive new AnnexAgent's FindMes
-        requestAllAvailableRuleInitializers(); // request FindMes of already registered annexAgents
-
-        addBehaviour(new TickerBehaviour(this,2000) {
-
-            @Override
-            protected void onTick() {
-                VariableMapper mapper = new VariableMapper();
-                mapper.addVariableValue("Article",new StringVariableValue("Skirt"));
-                mapper.addVariableValue("Position",new StringVariableValue("Torso"));
-                IntervalVariableValue value = new IntervalVariableValue(260000.0, 15.0, false, true);
-                try
-                {
-                    value.affect(new Condition("!="), new DoubleValue(5000.0));
-                } catch (ConflictException e)
-                {
-                    e.printStackTrace();
-                }
-                mapper.addVariableValue("Price", value);
-
-
-                UIQuery query = new UIQuery(mapper);
-                System.out.println("start answer ");
-                AgentQueryAnswers queryAnswers = answer(query);
-                System.out.println("end answer ");
-                for (String agent : queryAnswers.getAgents())
-                    System.out.println("received 1 from "+ agent);
-            }
-        });
-//        try {
-
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+//        requestAllAvailableRuleInitializers(); // request FindMes of already registered annexAgents
+        controller = Main.getAttributeController();
+        controller.setAgent(this);
+//        addBehaviour(new TickerBehaviour(this,2000) {
 //
-//        try {
-//            Thread.sleep(1000);
-//            System.out.println("sending 2");
-//            VariableMapper mapper = new VariableMapper();
-//            mapper.addVariableValue("Article",new StringVariableValue("Skirt"));
-//            UIQuery query = new UIQuery(mapper);
-//            AgentQueryAnswers queryAnswers = answer(query);
-//            for (String agent : queryAnswers.getAgents())
-//                System.out.println("received 2 from "+ agent);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+//            @Override
+//            protected void onTick() {
+//                VariableMapper mapper = new VariableMapper();
+////                mapper.addVariableValue("Article",new StringVariableValue("Skirt"));
+//                mapper.addVariableValue("Position",new StringVariableValue("Torso"));
+//                IntervalVariableValue value = new IntervalVariableValue(260000.0, 15.0, false, true);
+//                mapper.addVariableValue("Price", value);
 //
-//        try {
-//            Thread.sleep(1000);
-//            System.out.println("sending 3");
-//            VariableMapper mapper = new VariableMapper();
-//            mapper.addVariableValue("Article",new StringVariableValue("Skirt"));
-//            mapper.addVariableValue("Position",new StringVariableValue("Torso"));
-//            UIQuery query = new UIQuery(mapper);
-//            AgentQueryAnswers queryAnswers = answer(query);
-//            for (String agent : queryAnswers.getAgents())
-//                System.out.println("received 3 from "+ agent);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+//            }
+//        });
+    }
+
+    public void sendQuery(VariableMapper mapper)
+    {
+        UIQuery query = new UIQuery(mapper);
+        AgentQueryAnswers queryAnswers = answer(query);
+        for(String agent : queryAnswers.getAgents())
+        {
+            System.out.println("received from " + agent);
+            for(Product product: queryAnswers.getAnswer(agent).getProducts())
+                product.displayProduct();
+        }
+        System.out.println("sending query ended");
+        controller.showAnswer(queryAnswers);
     }
 
 
@@ -129,24 +97,29 @@ public class CentralAgent extends MessageReceiverAgent
         Main.debugging = false;
 
         // look for annexAgents that can answer query
+        expert.getRuleBase().displayRules();
+        System.out.println(query.getMapper());
         expert.forwardChain(query.getMapper());
         // get agents resulted from the forwardChain
+        expert.getRuleBase().displayVariables();
         AgentVariableValue agvv = (AgentVariableValue) expert.getRuleBase().getVariableValue(agentVariableValue);
         if(agvv == null || agvv.getValue() == null)
             return new AgentQueryAnswers();
         int numberOfAgents = agvv.getValue().size();
-
-        System.out.println("passed here!!");
-
+        numberOfAgents = ruleInitializers.size() - numberOfAgents;
+        System.out.println("passed here!! number of agents: "+numberOfAgents);
+        for(FindAgentRuleInitializer init : ruleInitializers)
+            System.out.println("rule init: " + init.getAgent() );
 
 
         // request from all possible agents
-        for (String agentName : agvv.getValue())
-            requestAnswerFromAgent(agentName,query);
+        for (String agentName : getAvailableAnnexAgents())
+            if(!agvv.getValue().contains(agentName))
+                requestAnswerFromAgent(agentName,query);
         // prepare message replier to "requestAnswer" conversation
         MessageTemplate template = MessageTemplate.MatchConversationId(AnnexAgent.requestAnswer);
         // what to do when the annex agent answers
-
+        pauseReceiving();
         int repliedAgents = 0;
         while (repliedAgents != numberOfAgents)
         {
@@ -161,6 +134,7 @@ public class CentralAgent extends MessageReceiverAgent
             answer.addAnswer(msg.getSender().getLocalName(),qans);
             repliedAgents++;
         }
+        resumeReceiving();
         // by this time answer should contain all annexAgents replies
         return answer;
     }
@@ -188,11 +162,23 @@ public class CentralAgent extends MessageReceiverAgent
         Main.debugging = false;
     }
 
+    protected String[] getAvailableAnnexAgents()
+    {
+        String[] agents = new String[ruleInitializers.size()];
+        int i =0;
+        for(FindAgentRuleInitializer init : ruleInitializers)
+            agents[i++] = init.getAgent();
+        return agents;
+    }
+
     public void prepareExpert()
     {
         expert.initRuleBase();
+        System.out.println("number of inits: " + ruleInitializers.size());
         for(RuleInitializer ruleInitializer : ruleInitializers)
+        {
             expert.addInitializer(ruleInitializer);
+        }
 
     }
 

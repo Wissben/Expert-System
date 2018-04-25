@@ -26,7 +26,7 @@ public class CentralReceiveFindMe extends MessageReceivingAction implements Seri
         if (msg != null) {
             try {
                 FindAgentRuleInitializer findMe = (FindAgentRuleInitializer) msg.getContentObject();
-                if(findMe != null)
+                if(findMe != null )
                     agent.addRuleInitializer(findMe);
                 System.out.println("find me from " + msg.getSender().getLocalName());
             } catch (UnreadableException e) {

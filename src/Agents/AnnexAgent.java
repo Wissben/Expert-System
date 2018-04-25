@@ -8,6 +8,7 @@ import BackEnd.Database.Product;
 import BackEnd.Database.QueryAnswer;
 import BackEnd.Database.QueryToProductsConverter;
 import BackEnd.ExpertSys.VariableMapper;
+import BackEnd.Types.IntegerValue;
 import FrontEnd.Main;
 import FrontEnd.UI.UIQuery;
 import jade.core.AID;
@@ -29,11 +30,13 @@ public class AnnexAgent extends MessageReceiverAgent
     private AnnexExpert expert;
     public static String annexSellService = "annexSeller";
     public static String requestAnswer = "requestAnswer";
+    protected int id;
 
-    public static AgentDescription newAgent(String name, AnnexExpert expert)
+    public static AgentDescription newAgent(String name,int id, AnnexExpert expert)
     {
-        Object[] arguments = new Object[1];
+        Object[] arguments = new Object[2];
         arguments[0] = expert;
+        arguments[1] = id;
         return new AgentDescription(name, AnnexAgent.class.getName(), arguments);
     }
 
@@ -120,6 +123,7 @@ public class AnnexAgent extends MessageReceiverAgent
         // find product's features
         VariableMapper mapper = query.getMapper();
         mapper.getVariableValueHashMap().remove(CentralAgent.agentVariableValue);
+        expert.initRuleBase();
         expert.forwardChain(mapper);
         // generate features from rule base after inference
         VariableMapper features = new VariableMapper(expert.getRuleBase());
@@ -128,9 +132,11 @@ public class AnnexAgent extends MessageReceiverAgent
 
     public QueryAnswer queryDataBase(VariableMapper features)
     {
+        features.addVariableValue("agentID",new IntegerValue(id));
         FeaturesToQuerryConverter featuresToQuerryConverter =
-                new FeaturesToQuerryConverter(features, Main.allArtcilesTableGenerator);
+                new FeaturesToQuerryConverter(features);
         featuresToQuerryConverter.generateQuery();
+        System.out.println(featuresToQuerryConverter.getDbQuery().getQuery());
         QueryToProductsConverter queryToProductsConverter =
                 new QueryToProductsConverter(featuresToQuerryConverter);
         Product[] products = queryToProductsConverter.queryDB();
@@ -149,6 +155,7 @@ public class AnnexAgent extends MessageReceiverAgent
         if (args != null)
         {
             expert = (AnnexExpert) args[0];
+            id = (int) args[1];
         }
 
     }

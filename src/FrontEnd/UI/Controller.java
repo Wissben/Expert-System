@@ -39,8 +39,8 @@ public class Controller implements Initializable
 
         addAnnexAgent.setOnAction((ActionEvent event) ->
         {
-            backEndToUi.addExpert("/home/wiss/CODES/TP-AGENT/Expert-System/ruleFindMe1", backEndToUi.varsPath, backEndToUi.rulesPath);
-            backEndToUi.addExpert("/home/wiss/CODES/TP-AGENT/Expert-System/ruleFindMe2", backEndToUi.varsPath, backEndToUi.rulesPath);
+//            backEndToUi.addExpert("/home/wiss/CODES/TP-AGENT/Expert-System/ruleFindMe1", backEndToUi.varsPath, backEndToUi.rulesPath);
+//            backEndToUi.addExpert("/home/wiss/CODES/TP-AGENT/Expert-System/ruleFindMe2", backEndToUi.varsPath, backEndToUi.rulesPath);
 
             try
             {

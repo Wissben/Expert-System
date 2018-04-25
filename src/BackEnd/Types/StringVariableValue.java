@@ -21,7 +21,15 @@ public class StringVariableValue extends VariableValue<String>
     public boolean equals(Object object)
     {
         StringVariableValue val = (StringVariableValue) object;
-        return value.equals(val.value);
+        try
+        {
+            return value.equals(val.value);
+        }
+        catch (NullPointerException exc)
+        {
+            System.out.println(val);
+        }
+        return false;
     }
 
     // compared using lexicographical order

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="100.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Widgets.WeatherChoice">
+   <children>
+      <ImageView fx:id="rainyImg" fitHeight="70.0" fitWidth="70.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@rain.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="cloudyImg" fitHeight="70.0" fitWidth="70.0" layoutX="115.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@cloud.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="sunnyImg" fitHeight="70.0" fitWidth="70.0" layoutX="216.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@sun.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

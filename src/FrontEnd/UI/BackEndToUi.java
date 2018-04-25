@@ -48,23 +48,23 @@ public class BackEndToUi
         ContainerManager m = new ContainerManager();
 //        addExpert("ruleFindMe1",varsPath,rulesPath);
 //        addExpert("ruleFindMe2",varsPath,rulesPath);
-        allArtcilesTableGenerator = new RuleBaseToTableConverter(experts.get(0).getRuleBase(), "test", dBconnection);
+        allArtcilesTableGenerator = RuleBaseToTableConverter.getInstance();
         allArtcilesTableGenerator.createTableQuery();
 //        allArtcilesTableGenerator.getDbQuery().executeCreateQuery();
 
         m.addAgent(RegistrationAgent.newAgent("reg1")).start();
-        m.addAgent(AnnexAgent.newAgent("agent1", experts.get(0))).start();
-        m.addAgent(AnnexAgent.newAgent("agent2", experts.get(1))).start();
+//        m.addAgent(AnnexAgent.newAgent("agent1", experts.get(0))).start();
+//        m.addAgent(AnnexAgent.newAgent("agent2", experts.get(1))).start();
         Thread.sleep(100);
         m.addAgent(CentralAgent.newAgent("central1", new Expert())).start();
 
     }
 
-    public void addExpert(String ruleFindMe, String varsPath, String rulesPath)
-    {
-
-        this.experts.add(new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
-                , new FindAgentRuleInitializer1(ruleFindMe)));
-
-    }
+//    public void addExpert(String ruleFindMe, String varsPath, String rulesPath)
+//    {
+//
+//        this.experts.add(new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+//                , new FindAgentRuleInitializer1(ruleFindMe)));
+//
+//    }
 }

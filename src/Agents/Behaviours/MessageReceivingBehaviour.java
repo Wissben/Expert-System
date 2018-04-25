@@ -15,6 +15,7 @@ import java.util.List;
 public class MessageReceivingBehaviour extends CyclicBehaviour implements Serializable
 {
     List<MessageReceivingAction> actions = new LinkedList<>();
+    protected boolean paused = false;
 
     public void addAction(MessageReceivingAction action)
     {
@@ -33,16 +34,37 @@ public class MessageReceivingBehaviour extends CyclicBehaviour implements Serial
 
     @Override
     public void action() {
+        if(paused)return;
         ACLMessage msg = myAgent.receive();
         if(msg!=null)
         {
-            Iterator<MessageReceivingAction> iter = actions.iterator();
-            while (iter.hasNext()) {
-                MessageReceivingAction action = iter.next();
+            for (int i = 0; i < actionsSize(); i++)
+            {
+                MessageReceivingAction action = getAction(i);
                 if (action.getTemplate() == null || action.getTemplate().match(msg))
                     if (action.action(msg))
                         removeAction(action);
             }
         }
     }
+    synchronized protected MessageReceivingAction getAction(int index)
+    {
+        return actions.get(index);
+    }
+
+    synchronized protected int actionsSize()
+    {
+        return actions.size();
+    }
+
+    public void pause()
+    {
+        paused = true;
+    }
+
+    public void resume()
+    {
+        paused = false;
+    }
 }
+

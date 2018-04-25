@@ -1,30 +1,61 @@
 package BackEnd.Database;
 
+import BackEnd.ExpertSys.VariableMapper;
 import BackEnd.RuleBase;
 import BackEnd.Types.DoubleValue;
 import BackEnd.Types.IntegerValue;
 import BackEnd.Types.StringVariableValue;
 import BackEnd.Types.VariableValue;
+import BackEnd.Variable;
+import FrontEnd.Main;
 
 import java.util.HashMap;
 
 public class RuleBaseToTableConverter
 {
-    private RuleBase ruleBase;
-    private String tableName;
+    static public String tableName = "Product";
     private HashMap<String, String> mapColNameToType;
     private DBconnection dBconnection;
     private DBQuery dbQuery;
+    protected VariableMapper mapper;
+    static protected RuleBaseToTableConverter _instance = null;
 
 
-    public RuleBaseToTableConverter(RuleBase ruleBase, String tableName, DBconnection dBconnection)
+    private RuleBaseToTableConverter(DBconnection dBconnection)
     {
-        this.ruleBase = ruleBase;
-        this.tableName = tableName;
         this.dBconnection = dBconnection;
         this.dbQuery = new DBQuery(dBconnection);
         this.generateTableColumns();
     }
+
+    public VariableMapper generateProductMapper()
+    {
+        if(this.mapper == null)
+        {
+            VariableMapper mapper = new VariableMapper();
+            mapper.addVariableValue("agentID", new IntegerValue(0));
+            mapper.addVariableValue("name", new StringVariableValue(""));
+            mapper.addVariableValue("Season", new StringVariableValue(""));
+            mapper.addVariableValue("Usages", new StringVariableValue(""));
+            mapper.addVariableValue("Position", new StringVariableValue(""));
+            mapper.addVariableValue("Size", new StringVariableValue(""));
+            mapper.addVariableValue("Article", new StringVariableValue(""));
+            mapper.addVariableValue("Material", new StringVariableValue(""));
+            mapper.addVariableValue("Gender", new StringVariableValue(""));
+            mapper.addVariableValue("SleeveLength", new StringVariableValue(""));
+            mapper.addVariableValue("Length", new StringVariableValue(""));
+            mapper.addVariableValue("Price", new DoubleValue(0));
+            this.mapper = mapper;
+        }
+        return this.mapper;
+    }
+
+    static public RuleBaseToTableConverter getInstance()
+    {
+        if(_instance ==null) _instance = new RuleBaseToTableConverter(Main.getdBconnection());
+        return _instance;
+    }
+
 
     private void generateTableColumns()
     {
@@ -36,9 +67,10 @@ public class RuleBaseToTableConverter
         mapColNameToType.put("name", "VARCHAR(255)");
         mapColNameToType.put("agentID", "INT");
 
-        for (String name : ruleBase.getVariableList().keySet())
+        VariableMapper mapper = generateProductMapper();
+        for (String name : mapper.getVariables())
         {
-            mapColNameToType.put(name, getTypeFrom(ruleBase.getVariableList().get(name).getValue()));
+            mapColNameToType.put(name, getTypeFrom(mapper.getVariableValue(name)));
         }
         /**All hail the BRICOLAGE
          mapColNameToType.remove("Agents");
@@ -58,7 +90,7 @@ public class RuleBaseToTableConverter
             index += 2;
         }
         dbQuery.createTableQuerry(this.tableName, columns);
-
+        System.out.println(dbQuery.getQuery());
     }
 
 
@@ -81,16 +113,6 @@ public class RuleBaseToTableConverter
 
     }
 
-
-    public RuleBase getRuleBase()
-    {
-        return ruleBase;
-    }
-
-    public void setRuleBase(RuleBase ruleBase)
-    {
-        this.ruleBase = ruleBase;
-    }
 
     public String getTableName()
     {

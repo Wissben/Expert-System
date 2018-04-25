@@ -44,7 +44,6 @@ public class Rule {
 
     //used by forward chaining only !
     Boolean check() { // if antecedent is true and rule has not fired
-        RuleBase.appendText("\nTesting rule " + ruleName);
         for (int i = 0; i < antecedents.size(); i++) {
             if (antecedents.get(i).truth == null) return null;
             if (!antecedents.get(i).truth) {

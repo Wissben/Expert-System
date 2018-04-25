@@ -21,3 +21,5 @@
 <Temperature:Double>28.5,15.5,</Temperature>
 
 <Agents:Agent></Agents>
+
+<Usage:String>Casual,Protection,Accessory,</Usage>

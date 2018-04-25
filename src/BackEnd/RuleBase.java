@@ -150,6 +150,12 @@ public class RuleBase {
         return variableList;
     }
 
+    public void addVariable(String name, RuleVariable variable)
+    {
+        if(!variableList.containsKey(name))
+            variableList.put(name,variable);
+    }
+
     public VariableValue getVariableValue(String variableName)
     {
         if(variableList.get(variableName) == null)

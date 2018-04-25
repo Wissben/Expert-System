@@ -38,6 +38,7 @@ public class Clause {
     }
 
     Boolean check() {
+//        System.out.println("entered in clause");
         if (consequent) return null;
         if (lhs.value == null) {
             return truth = null;    // Var value is undefined
@@ -56,6 +57,7 @@ public class Clause {
                     truth = !lhs.value.equals(rhs);
                     break;
             }
+//            System.out.println("truth is " + truth);
             return truth;
         }
     }

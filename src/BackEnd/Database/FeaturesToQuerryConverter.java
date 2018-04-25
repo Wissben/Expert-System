@@ -8,13 +8,11 @@ public class FeaturesToQuerryConverter
 
     private VariableMapper variableMapper;
     private DBQuery dbQuery;
-    private RuleBaseToTableConverter ruleBaseToTableConverter;
 
-    public FeaturesToQuerryConverter(VariableMapper variableMapper, RuleBaseToTableConverter ruleBaseToTableConverter)
+    public FeaturesToQuerryConverter(VariableMapper variableMapper)
     {
-        this.ruleBaseToTableConverter = ruleBaseToTableConverter;
         this.variableMapper = variableMapper;
-        this.dbQuery = new DBQuery(Main.dBconnection);
+        this.dbQuery = new DBQuery(Main.getdBconnection());
 
     }
 
@@ -22,7 +20,7 @@ public class FeaturesToQuerryConverter
     {
         String query;
         query = "SELECT *";
-        query += " FROM " + ruleBaseToTableConverter.getTableName();
+        query += " FROM " + RuleBaseToTableConverter.tableName;
         query += " WHERE ";
         query += generateConditionsFromFeatures();
         query += ";";
@@ -49,9 +47,10 @@ public class FeaturesToQuerryConverter
     {
         String conditions = "";
         String separator = " AND ";
-        for (String key : variableMapper.getVariableValueHashMap().keySet())
+        for (String key : RuleBaseToTableConverter.getInstance().generateProductMapper().getVariables())
         {
-            if (variableMapper.getVariableValueHashMap().get(key).getValue() != null)
+            if (variableMapper.getVariableValueHashMap().get(key) != null &&
+                    variableMapper.getVariableValueHashMap().get(key).getValue() != null)
             {
                 String cond = variableMapper.getVariableValue(key).getCondition(key);
                 if (cond != null)
@@ -84,13 +83,4 @@ public class FeaturesToQuerryConverter
         this.dbQuery = dbQuery;
     }
 
-    public RuleBaseToTableConverter getRuleBaseToTableConverter()
-    {
-        return ruleBaseToTableConverter;
-    }
-
-    public void setRuleBaseToTableConverter(RuleBaseToTableConverter ruleBaseToTableConverter)
-    {
-        this.ruleBaseToTableConverter = ruleBaseToTableConverter;
-    }
 }

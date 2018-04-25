@@ -34,7 +34,7 @@ public class QueryToProductsConverter
             while (resultSet.next())
             {
                 this.initMapTypeToGetType(resultSet);
-                HashMap<String, String> colMap = featuresToQuerryConverter.getRuleBaseToTableConverter().getMapColNameToType();
+                HashMap<String, String> colMap = RuleBaseToTableConverter.getInstance().getMapColNameToType();
                 Product product = new Product();
 
                 for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++)
@@ -76,6 +76,7 @@ public class QueryToProductsConverter
             }
             return null;
         });
+
 
         mapTypeToGetType.put(Types.INTEGER, (column, resultSet1) ->
         {

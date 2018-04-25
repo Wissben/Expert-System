@@ -1,6 +1,6 @@
 <Article:String>Tshirt,Pant,Short,Underwear,Boot,Running,Glove,Sweatshirt,Pull,Jacket,Skirt,Top,Dress,Watch,Bag,Sock,Ring,scarf,Glasses,Hat,Cap,Liquette,Hijab,HandBag,Bra</Article>
 
-<Position:String>Head,Neck,Hand,Torso,Legs,Feet,Wrist,Finger,</Position>
+<Position:String>Head,Hand,Torso,Legs,Feet,</Position>
 
 <Gender:String>Male,Female,</Gender>
 
@@ -22,6 +22,12 @@
 
 <Agents:Agent></Agents>
 
-<Usages:String>Sport,Casual,Protection,Accessory,</Usage>
+<Usages:String>Sport,Casual,Protection,Accessory,</Usages>
 
-<Quality:String>Low,Average,High,VeryHigh,</Quality>
+<Weight:Double></Weight>
+
+<Height:Double></Height>
+
+<Quality:String>High,Average,Low</Quality>
+
+<L:Double></L>

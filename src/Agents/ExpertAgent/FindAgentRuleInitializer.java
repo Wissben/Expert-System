@@ -10,14 +10,14 @@ import java.io.Serializable;
 public abstract class FindAgentRuleInitializer extends RuleInitializer implements Serializable
 {
     // The agent that the rule set allows you to find
-    AgentVariableValue agent;
+    String agent;
 
-    public FindAgentRuleInitializer()
-    {
-
+    public FindAgentRuleInitializer(String agent) {
+        this.agent = agent;
     }
 
-    public FindAgentRuleInitializer(AgentVariableValue agent) {
-        this.agent = agent;
+    public String getAgent()
+    {
+        return agent;
     }
 }

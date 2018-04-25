@@ -35,4 +35,14 @@ public class MessageReceiverAgent extends Agent
     {
         return getMessageBehaviourInstance().containsMessageAction(messageAction);
     }
+
+    public void pauseReceiving()
+    {
+        getMessageBehaviourInstance().pause();
+    }
+
+    public void resumeReceiving()
+    {
+        getMessageBehaviourInstance().resume();
+    }
 }

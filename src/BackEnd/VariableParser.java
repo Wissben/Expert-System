@@ -25,10 +25,10 @@ public class VariableParser {
         for (String key : this.mapRhsToLhs.keySet())
         {
             String[] keys = key.split(":");
-            RuleVariable temp = new RuleVariable(keys[0]);
-            if(ruleBase.containsVariable(key))
-                temp = ruleBase.getVariableList().get(keys[0]);
 
+            if(ruleBase.containsVariable(keys[0]))
+                continue;
+            RuleVariable temp = new RuleVariable(keys[0]);
             String labels = "";
             for (int i = 0; i < mapRhsToLhs.get(key).length; i++)
             {

@@ -44,10 +44,16 @@ public class RuleParser
                         new Condition(lhsComponent[2]), (VariableValue) mapClassNameToConstructor.get(lhsComponent[1]).instantiate(lhsComponent[3])));
             }
 //            System.out.println("RHS " + ruleBase.getVariableList().get(rhs[0]));
-            ruleBase.addRule(new Rule(rhs[0], temporaryLeftClauses,
-                    new Clause(ruleBase.getVariableList().get(rhs[0]),
-                            new Condition(rhs[2]), (VariableValue) mapClassNameToConstructor.get(rhs[1]).instantiate(rhs[3]))));
-
+//            try
+//            {
+                ruleBase.addRule(new Rule(rhs[0], temporaryLeftClauses,
+                        new Clause(ruleBase.getVariableList().get(rhs[0]),
+                                new Condition(rhs[2]), (VariableValue) mapClassNameToConstructor.get(rhs[1]).instantiate(rhs[3]))));
+//            }
+//            catch (NullPointerException e)
+//            {
+//                System.out.println(rhs[0]);
+//            }
         }
     }
 
@@ -68,7 +74,7 @@ public class RuleParser
         File inputFile = new File(pathToFile);
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         String line;
-        String patternModel = "(<.+/.+/./.+>)=(<.+/.+/./.+>,)+";
+        String patternModel = "(<.+/.+/.+/.+>)=(<.+/.+/.+/.+>,)+";
         Pattern pattern = Pattern.compile(patternModel);
         this.mapRhsToLhs = new HashMap<>();
         while ((line = reader.readLine()) != null)

@@ -112,8 +112,21 @@ public class IntervalVariableValue<T extends Comparable> extends VariableValue<I
         {
             String s = (interval.includeInf) ? ">=" : ">";
             String i = (interval.includeSup) ? "<=" : "<";
-            condition += "((" + name + s + interval.inf + ") AND ";
-            condition += "(" + name + i + interval.sup + ")) OR";
+            if(interval.inf != null && interval.sup != null)
+            {
+                condition += "((" + name + s + interval.inf + ") AND ";
+                condition += "(" + name + i + interval.sup + ")) OR";
+            }
+            else if(interval.inf != null)
+            {
+                condition += "(" + name + s + interval.inf + ") OR";
+            }
+            else if(interval.sup != null)
+            {
+                condition += "(" + name + i + interval.sup + ") OR";
+            }
+            else
+                condition += "(TRUE) OR";
         }
         condition = condition.substring(0, condition.length() - 3);
         condition += ")";

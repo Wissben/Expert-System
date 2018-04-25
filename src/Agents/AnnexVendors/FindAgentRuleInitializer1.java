@@ -15,7 +15,8 @@ public class FindAgentRuleInitializer1 extends FindAgentRuleInitializer
 {
     String path;
 
-    public FindAgentRuleInitializer1(String path) {
+    public FindAgentRuleInitializer1(String path,String agent) {
+        super(agent);
         this.path = path;
     }
 
