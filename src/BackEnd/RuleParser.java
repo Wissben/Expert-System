@@ -33,7 +33,7 @@ public class RuleParser
         this.ruleBase = ruleBase;
         for (String key : mapRhsToLhs.keySet())
         {
-            String[] rhs = key.substring(1, key.length() - 1).split("/"); //<sd/sdsds/sdds>
+            String[] rhs = key.substring(1, key.length() - 1).split("/");
             String[] lhs = mapRhsToLhs.get(key).split(",");
             ArrayList<Clause> temporaryLeftClauses = new ArrayList<>();
             for (int i = 0; i < lhs.length; i++)
@@ -41,7 +41,7 @@ public class RuleParser
                 lhs[i] = lhs[i].substring(1, lhs[i].length() - 1);
                 String[] lhsComponent = lhs[i].split("/");
                 temporaryLeftClauses.add(new Clause(ruleBase.getVariableList().get(lhsComponent[0]),
-                        new Condition(lhsComponent[2]), (VariableValue) mapClassNameToConstructor.get(lhsComponent[1]).instantiate(lhsComponent[3])));
+                       new Condition(lhsComponent[2]), (VariableValue) mapClassNameToConstructor.get(lhsComponent[1]).instantiate(lhsComponent[3])));
             }
 //            System.out.println("RHS " + ruleBase.getVariableList().get(rhs[0]));
 //            try
@@ -77,13 +77,16 @@ public class RuleParser
         String patternModel = "(<.+/.+/.+/.+>)=(<.+/.+/.+/.+>,)+";
         Pattern pattern = Pattern.compile(patternModel);
         this.mapRhsToLhs = new HashMap<>();
+        int i = 0;
         while ((line = reader.readLine()) != null)
         {
             Matcher matcher = pattern.matcher(line);
             if (matcher.matches())
             {
                 //System.out.println(matcher.group(2));
-                this.mapRhsToLhs.put(matcher.group(1), matcher.group(2));
+                String rhs = matcher.group(1).substring(0, matcher.group(1).length() - 1);
+                this.mapRhsToLhs.put(rhs+"/"+i+">", matcher.group(2));
+                i++;
             }
         }
     }

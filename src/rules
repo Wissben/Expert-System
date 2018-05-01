@@ -36,8 +36,6 @@
 
 <Article/String/=/Glasses>=<Usages/String/=/Accessory>,<Position/String/=/Head>,
 
-<Article/String/=/Hat>=<Position/String/=/Head>,
-
 <Article/String/=/Cap>=<Usages/String/=/Accessory>,<Season/String/=/Summer>,<Position/String/=/Head>,<Material/String/=/Cotton>,<Size/String/=/Small>,
 
 <Article/String/=/Liquette>=<Usages/String/=/Casual>,<Gender/String/=/Female>,<Position/String/=/Torso>,<Material/String/=/CottonVoile>,<Size/String/=/Long>,
@@ -50,13 +48,9 @@
 
 <Quality/String/=/High>=<Price/Double/>=/6000.0>,<Usages/String/=/Casual>,
 
-<Usages/String/=/Accessory>=<Material/String/=/Metal>,<Size/String/=/Small>,
+<Usages/String/=/Accessory>=<Material/String/=/Metal>,
 
-<Usages/String/=/Accessory>=<Size/String/=/Small>,<Position/String/=/Head>,
-
-<Usages/String/=/Accessory>=<Size/String/=/Small>,<Position/String/=/Wrist>,
-
-<Usages/String/=/Accessory>=<Size/String/=/Small>,<Position/String/=/Hand>,
+<Usages/String/=/Accessory>=<Position/String/=/Hand>,
 
 <Season/String/=/Summer>=<Temperature/Double/>/25.0>,
 
@@ -64,13 +58,13 @@
 
 <Season/String/=/Winter>=<Temperature/Double/</15.0>,
 
-<SleeveLength/String/=/Short>=<L/Double/</0.5>,
+<SleeveLength/String/=/Short>=<L/Double/</0.5>,<Position/String/=/Torso>,
 
-<SleeveLength/String/=/Short>=<Season/String/=/Summer>,
+<SleeveLength/String/=/Short>=<Season/String/=/Summer>,<Position/String/=/Torso>,
 
-<SleeveLength/String/=/Long>=<L/Double/>/0.5>,
+<SleeveLength/String/=/Long>=<L/Double/>/0.5>,<Position/String/=/Torso>,
 
-<SleeveLength/String/=/Long>=<Season/String/=/Winter>,
+<SleeveLength/String/=/Long>=<Season/String/=/Winter>,<Position/String/=/Torso>,
 
 <Size/String/=/XS>=<Weight/Double/</56>,
 
@@ -90,9 +84,11 @@
 
 <Size/String/=/XL>=<Weight/Double/</85>,<Weight/Double/>/79>,<Height/Double/</168>,
 
-<Size/String/=/XL>=<Weight/Double/</90>,<Weight/Double/>/84>,<Height/Double/</187>,<Height/Double/>/162>,
+<Size/String/=/XL>=<Weight/Double/</85>,<Weight/Double/>/79>,<Height/Double/>/182>,
 
-<Size/String/=/XXL>=<Weight/Double/</90>,<Weight/Double/>/84>,<Height/Double/</156>,
+<Size/String/=/XL>=<Weight/Double/</90>,<Weight/Double/>/84>,<Height/Double/>/162>,
+
+<Size/String/=/XXL>=<Weight/Double/</90>,<Weight/Double/>/84>,<Height/Double/</162>,
 
 <Size/String/=/XXL>=<Weight/Double/</105>,<Weight/Double/>/90>,
 

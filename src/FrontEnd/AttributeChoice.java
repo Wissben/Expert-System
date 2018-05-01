@@ -9,15 +9,14 @@ import FrontEnd.Widgets.BodyChoice;
 import FrontEnd.Widgets.WeatherChoice;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -49,7 +48,7 @@ public class AttributeChoice implements Initializable
     private Slider tempSlider;
 
     @FXML
-    private TextField ageField;
+    private ChoiceBox<String> usage;
 
     @FXML
     private TextField priceField;
@@ -86,8 +85,8 @@ public class AttributeChoice implements Initializable
         weatherController = (WeatherChoice) initController(weatherPane,"Widgets/WeatherChoice.fxml");
         initButton();
         initSlider();
+        initUsages();
         initNumTextFields();
-        fields.add(ageField);
         fields.add(priceField);
         fields.add(weightField);
         fields.add(heightField);
@@ -109,6 +108,13 @@ public class AttributeChoice implements Initializable
         return loader.getController();
     }
 
+    protected void initUsages()
+    {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        list.addAll("Sport","Casual","Accessory");
+        usage.setItems(list);
+    }
+
     protected void initButton()
     {
         lookup.setOnAction(event -> {
@@ -123,8 +129,7 @@ public class AttributeChoice implements Initializable
     {
         for(TextField field : fields)
             field.clear();
-        tempChanged = false;
-        lengthChanged = false;
+
 
         weatherController.unselectAll();
         bodyController.unselectAll();
@@ -134,6 +139,10 @@ public class AttributeChoice implements Initializable
         tempSlider.setStyle("");
         tempText.setText("None");
         lengthSlider.setStyle("");
+        tempChanged = false;
+        lengthChanged = false;
+
+        usage.getSelectionModel().clearSelection();
     }
 
     public void showAnswer(AgentQueryAnswers answers)
@@ -185,7 +194,6 @@ public class AttributeChoice implements Initializable
         forceFieldToNumbers(priceField);
         forceFieldToNumbers(weightField);
         forceFieldToNumbers(heightField);
-        forceFieldToNumbers(ageField);
     }
 
     protected void forceFieldToNumbers(TextField textField)
@@ -243,11 +251,20 @@ public class AttributeChoice implements Initializable
         return new StringVariableValue(bodyController.getSelectedPart());
     }
 
+    protected VariableValue getUsages()
+    {
+        if(usage.getSelectionModel().getSelectedItem() == null)
+            System.out.println("usage is null!!");
+        if(usage.getSelectionModel().getSelectedItem() == null)
+            return null;
+        return new StringVariableValue(usage.getValue());
+    }
+
 
     public VariableMapper generateMapper()
     {
         VariableMapper mapper = new VariableMapper();
-        mapper.addVariableValue("Age",getTFValue(ageField));
+        mapper.addVariableValue("Usages",getUsages());
         mapper.addVariableValue("Weight",getTFValue(weightField));
         mapper.addVariableValue("Height",getTFValue(heightField));
         mapper.addVariableValue("Temperature",getTemperature());

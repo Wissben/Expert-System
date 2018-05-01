@@ -24,8 +24,8 @@ public class Main extends Application {
 
     private static DBconnection dBconnection;
     public static RuleBaseToTableConverter allArtcilesTableGenerator;
-    public static String varsPath = "ruleVariables";
-    public static String rulesPath = "rules";
+    public static String varsPath = "src/ruleVariables";
+    public static String rulesPath = "src/rules";
     public static AttributeChoice attributeController = null;
 
     @Override
@@ -40,7 +40,7 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        startAgents();
+        startCentral();
     }
 
     public static AttributeChoice getAttributeController()
@@ -67,41 +67,43 @@ public class Main extends Application {
 //        }while (x != 0);
         launch(args);
     }
-
-    static void startAgents() throws StaleProxyException
+    static ContainerManager m = new ContainerManager();
+    public static void startAgents()
     {
-        ContainerManager m = new ContainerManager();
-        String varsPath = "src/ruleVariables";
-        String rulesPath = "src/rules";
-        AnnexExpert expert = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath,rulesPath), new AskUserConsole()
-                , new FindAgentRuleInitializer1("src/ruleFindMe1","agent1"));
-        AnnexExpert expert2 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath,rulesPath), new AskUserConsole()
-                , new FindAgentRuleInitializer1("src/ruleFindMe2","agent2"));
-        Expert central = new Expert();
+        try
+        {
+            String varsPath = "src/ruleVariables";
+            String rulesPath = "src/rules";
+            AnnexExpert expert = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+                    , new FindAgentRuleInitializer1("src/ruleFindMe1", "agent1"));
+            AnnexExpert expert2 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+                    , new FindAgentRuleInitializer1("src/ruleFindMe2", "agent2"));
+            AnnexExpert expert3 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+                    , new FindAgentRuleInitializer1("src/ruleFindMe3", "agent3"));
+            AnnexExpert expert4 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+                    , new FindAgentRuleInitializer1("src/ruleFindMe4", "agent4"));
+            AnnexExpert expert5 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+                    , new FindAgentRuleInitializer1("src/ruleFindMe5", "agent5"));
 
-        m.addAgent(RegistrationAgent.newAgent("reg1")).start();
-        m.addAgent(AnnexAgent.newAgent("agent1",1,expert)).start();
-        m.addAgent(AnnexAgent.newAgent("agent2",2,expert2)).start();
+
+            m.addAgent(RegistrationAgent.newAgent("reg1")).start();
+            m.addAgent(AnnexAgent.newAgent("agent1", 1, expert)).start();
+            m.addAgent(AnnexAgent.newAgent("agent2", 2, expert2)).start();
+            m.addAgent(AnnexAgent.newAgent("agent3", 3, expert3)).start();
+            m.addAgent(AnnexAgent.newAgent("agent4", 4, expert4)).start();
+            m.addAgent(AnnexAgent.newAgent("agent5", 5, expert5)).start();
+        }catch (Exception e)
+        {
+
+        }
+    }
+
+    static void startCentral() throws StaleProxyException
+    {
+        Expert central = new Expert();
         m.addAgent(CentralAgent.newAgent("central",central)).start();
     }
 
-    static void tryIntervals() throws ConflictException {
-        IntegerValue val = new IntegerValue(15);
-
-        IntegerValue val1 = new IntegerValue(18);
-        IntervalUnion<Integer> full = new IntervalUnion<>(new Interval<>());
-        IntervalVariableValue<Integer> halfd = new IntervalVariableValue<>(130,5,true,true);
-        IntervalVariableValue<Integer> halfu = new IntervalVariableValue<>(120,5,true,true);
-        halfd.affect(new Condition("="),val1);
-        System.out.println(halfd.getValue());
-        System.out.println(halfu.getValue());
-        System.out.println("intersection: " + halfd.getValue().intersects(halfu.getValue()));
-        System.out.println("union: " + halfd.getValue().union(halfu.getValue()));
-        System.out.println("remove: " + halfd.getValue().remove(halfu.getValue()));
-        full = full.remove(val.getValue());
-        System.out.println("val : " + val + " val1 " + val1 + " full " + full);
-        System.out.println(halfd.isMoreThan(halfu) + " " + halfd.isLessThan(halfu) + " " +halfd.equals(halfu));
-    }
     public static boolean debugging = false;
     public static void print(String str)
     {
@@ -114,7 +116,7 @@ public class Main extends Application {
         dBconnection = new DBconnection("jdbc:mysql://localhost:3306/",
                 "root",
                 "Resssay95",
-                "TechAgent");
+                "TechAgent2");
     }
 
     public static DBconnection getdBconnection()

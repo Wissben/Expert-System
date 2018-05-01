@@ -11,6 +11,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
@@ -25,7 +26,10 @@ public class MainWindow implements Initializable
     private ListView<Product> productList;
 
     @FXML
-    private Button showProduct;
+    private Button returnButton;
+
+    @FXML
+    private ListView<String> agentsList;
 
     protected String defaultImage = "clothesImages/default.png";
 
@@ -54,16 +58,31 @@ public class MainWindow implements Initializable
             }
         });
 
+        agentsList.setCellFactory(listView -> new ListCell<String>() {
+            @Override
+            public void updateItem(String desc, boolean empty) {
+                super.updateItem(desc, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(desc);
+                }
+            }
+        });
+        returnButton.setOnAction(event -> ((Stage)returnButton.getScene().getWindow()).close());
 
     }
 
     public void updateWindow(AgentQueryAnswers answers)
     {
         ObservableList<Product> items = FXCollections.observableArrayList ();
+        ObservableList<String> agentDescs = FXCollections.observableArrayList ();
         for(String agent : answers.getAgents())
         {
             items.addAll(answers.getAnswer(agent).getProducts());
+            agentDescs.add(agent+" : "+answers.getAnswer(agent).getProducts().length);
         }
         productList.setItems(items);
+        agentsList.setItems(agentDescs);
     }
 }

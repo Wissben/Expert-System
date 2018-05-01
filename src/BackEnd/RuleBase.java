@@ -131,6 +131,7 @@ public class RuleBase {
     public void addRule(Rule rule)
     {
         this.ruleList.addElement(rule);
+        rule.display();
     }
 
     public void removeRule(Rule rule)

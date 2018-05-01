@@ -46,7 +46,7 @@ public class CentralAgent extends MessageReceiverAgent
     @Override
     public void setup()
     {
-
+        Main.startAgents();
         Object[] args = getArguments();
         if(args != null)
         {
@@ -76,13 +76,6 @@ public class CentralAgent extends MessageReceiverAgent
     {
         UIQuery query = new UIQuery(mapper);
         AgentQueryAnswers queryAnswers = answer(query);
-        for(String agent : queryAnswers.getAgents())
-        {
-            System.out.println("received from " + agent);
-            for(Product product: queryAnswers.getAnswer(agent).getProducts())
-                product.displayProduct();
-        }
-        System.out.println("sending query ended");
         controller.showAnswer(queryAnswers);
     }
 
@@ -111,7 +104,7 @@ public class CentralAgent extends MessageReceiverAgent
         for(FindAgentRuleInitializer init : ruleInitializers)
             System.out.println("rule init: " + init.getAgent() );
 
-
+        pauseReceiving();
         // request from all possible agents
         for (String agentName : getAvailableAnnexAgents())
             if(!agvv.getValue().contains(agentName))
@@ -119,7 +112,7 @@ public class CentralAgent extends MessageReceiverAgent
         // prepare message replier to "requestAnswer" conversation
         MessageTemplate template = MessageTemplate.MatchConversationId(AnnexAgent.requestAnswer);
         // what to do when the annex agent answers
-        pauseReceiving();
+
         int repliedAgents = 0;
         while (repliedAgents != numberOfAgents)
         {
