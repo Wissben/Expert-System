@@ -56,6 +56,7 @@ public class VariableParser {
                 mapRhsToLhs.put(currVar, currValues);
             }
         }
+        reader.close();
     }
 
 

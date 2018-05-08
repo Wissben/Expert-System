@@ -89,6 +89,7 @@ public class RuleParser
                 i++;
             }
         }
+        reader.close();
     }
 
 

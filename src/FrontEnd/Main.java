@@ -20,6 +20,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileReader;
+import java.util.Scanner;
+
 public class Main extends Application {
 
     private static DBconnection dBconnection;
@@ -74,27 +78,58 @@ public class Main extends Application {
         {
             String varsPath = "src/ruleVariables";
             String rulesPath = "src/rules";
-            AnnexExpert expert = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
-                    , new FindAgentRuleInitializer1("src/ruleFindMe1", "agent1"));
-            AnnexExpert expert2 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
-                    , new FindAgentRuleInitializer1("src/ruleFindMe2", "agent2"));
-            AnnexExpert expert3 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
-                    , new FindAgentRuleInitializer1("src/ruleFindMe3", "agent3"));
-            AnnexExpert expert4 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
-                    , new FindAgentRuleInitializer1("src/ruleFindMe4", "agent4"));
-            AnnexExpert expert5 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
-                    , new FindAgentRuleInitializer1("src/ruleFindMe5", "agent5"));
-
-
             m.addAgent(RegistrationAgent.newAgent("reg1")).start();
-            m.addAgent(AnnexAgent.newAgent("agent1", 1, expert)).start();
-            m.addAgent(AnnexAgent.newAgent("agent2", 2, expert2)).start();
-            m.addAgent(AnnexAgent.newAgent("agent3", 3, expert3)).start();
-            m.addAgent(AnnexAgent.newAgent("agent4", 4, expert4)).start();
-            m.addAgent(AnnexAgent.newAgent("agent5", 5, expert5)).start();
+
+            File inputFile = new File("src/agentCount");
+            Scanner reader = new Scanner(new FileReader(inputFile));
+            int agentCount = reader.nextInt();
+            reader.close();
+            Thread.sleep(300);
+            AnnexExpert[] experts = new AnnexExpert[agentCount];
+            for (int i = 1; i <= agentCount; i++)
+            {
+                System.out.println("src/ruleFindMe"+i);
+                experts[i-1] = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+                        , new FindAgentRuleInitializer1("src/ruleFindMe"+i, "agent"+i));
+            }
+            for (int i = 1; i <= agentCount; i++)
+            {
+                m.addAgent(AnnexAgent.newAgent("agent"+i, i, experts[i-1])).start();
+            }
+//            AnnexExpert expert = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+//                    , new FindAgentRuleInitializer1("src/ruleFindMe1", "agent1"));
+//            AnnexExpert expert2 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+//                    , new FindAgentRuleInitializer1("src/ruleFindMe2", "agent2"));
+//            AnnexExpert expert3 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+//                    , new FindAgentRuleInitializer1("src/ruleFindMe3", "agent3"));
+//            AnnexExpert expert4 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+//                    , new FindAgentRuleInitializer1("src/ruleFindMe4", "agent4"));
+//            AnnexExpert expert5 = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+//                    , new FindAgentRuleInitializer1("src/ruleFindMe5", "agent5"));
+//
+//
+//
+//            m.addAgent(AnnexAgent.newAgent("agent1", 1, expert)).start();
+//            m.addAgent(AnnexAgent.newAgent("agent2", 2, expert2)).start();
+//            m.addAgent(AnnexAgent.newAgent("agent3", 3, expert3)).start();
+//            m.addAgent(AnnexAgent.newAgent("agent4", 4, expert4)).start();
+//            m.addAgent(AnnexAgent.newAgent("agent5", 5, expert5)).start();
         }catch (Exception e)
         {
 
+        }
+    }
+
+    public static void addAgent(int id)
+    {
+        AnnexExpert expert = new AnnexExpert(SimpleClothRulesInit.generateRuleBaseFromFiles(varsPath, rulesPath), new AskUserConsole()
+                , new FindAgentRuleInitializer1("src/ruleFindMe"+id, "agent"+id));
+        try
+        {
+            m.addAgent(AnnexAgent.newAgent("agent"+id, id, expert)).start();
+        } catch (StaleProxyException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -116,7 +151,7 @@ public class Main extends Application {
         dBconnection = new DBconnection("jdbc:mysql://localhost:3306/",
                 "root",
                 "Resssay95",
-                "TechAgent2");
+                "TechAgent3");
     }
 
     public static DBconnection getdBconnection()

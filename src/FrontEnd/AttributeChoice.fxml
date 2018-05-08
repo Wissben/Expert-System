@@ -30,5 +30,6 @@
       <Text layoutX="622.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(DA)" />
       <Button fx:id="reset" layoutX="574.0" layoutY="459.0" mnemonicParsing="false" text="Reset" />
       <ChoiceBox fx:id="usage" layoutX="434.0" layoutY="99.0" prefHeight="26.0" prefWidth="171.0" />
+      <Button fx:id="addAgentButton" layoutX="661.0" layoutY="38.0" mnemonicParsing="false" text="add agent" />
    </children>
 </AnchorPane>

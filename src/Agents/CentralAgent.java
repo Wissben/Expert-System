@@ -46,7 +46,6 @@ public class CentralAgent extends MessageReceiverAgent
     @Override
     public void setup()
     {
-        Main.startAgents();
         Object[] args = getArguments();
         if(args != null)
         {
@@ -58,6 +57,7 @@ public class CentralAgent extends MessageReceiverAgent
 //        requestAllAvailableRuleInitializers(); // request FindMes of already registered annexAgents
         controller = Main.getAttributeController();
         controller.setAgent(this);
+        Main.startAgents();
 //        addBehaviour(new TickerBehaviour(this,2000) {
 //
 //            @Override
@@ -90,8 +90,8 @@ public class CentralAgent extends MessageReceiverAgent
         Main.debugging = false;
 
         // look for annexAgents that can answer query
-        expert.getRuleBase().displayRules();
-        System.out.println(query.getMapper());
+//        expert.getRuleBase().displayRules();
+//        System.out.println(query.getMapper());
         expert.forwardChain(query.getMapper());
         // get agents resulted from the forwardChain
         expert.getRuleBase().displayVariables();
@@ -149,6 +149,11 @@ public class CentralAgent extends MessageReceiverAgent
 
     public void addRuleInitializer(FindAgentRuleInitializer initializer)
     {
+        for (int i = 0; i < ruleInitializers.size(); i++)
+        {
+            if(initializer.getAgent().equals(ruleInitializers.get(i).getAgent()))
+                return;
+        }
         Main.debugging = true;
         expert.addInitializer(initializer);
         ruleInitializers.add(initializer);

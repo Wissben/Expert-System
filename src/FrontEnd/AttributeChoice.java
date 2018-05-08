@@ -40,6 +40,8 @@ public class AttributeChoice implements Initializable
 
     @FXML
     private Button lookup;
+    @FXML
+    private Button addAgentButton;
 
     @FXML
     private Slider lengthSlider;
@@ -123,6 +125,24 @@ public class AttributeChoice implements Initializable
         });
 
         reset.setOnAction(event -> reset());
+        addAgentButton.setOnAction(event -> startAddAgent());
+    }
+
+    protected void startAddAgent()
+    {
+        Parent root;
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("addAgent.fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Add agent");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     protected void reset()
