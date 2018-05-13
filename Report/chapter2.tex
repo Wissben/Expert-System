@@ -1,6 +1,67 @@
 \chapter{Implémentation d'un système expert en Java}
-\section{Outils utilisés}
+\section{Outils utilisés}\label{usedTools}
+\subsection{Langage de programmation : }
+\paragraph{}
+Nous avons opté pour le langage \href{https://fr.wikipedia.org/wiki/Java_(technique)}{Java}, car il offre une grande flexibilité et facilite l'implémentation qui est due au fait qu'il soit totalement orienté-objet.
+\subsection{IDE : }
+\paragraph{IntelliJ Idea} L'environnement de développement choisit est \href{https://www.jetbrains.com/idea/}{IntelliJ IDEA}, spécialement dédié au développement en utilisant le langage \href{https://fr.wikipedia.org/wiki/Java_(technique)}{Java}. Il est proposé par l'entreprise \href{https://www.jetbrains.com}{JetBrains} et est caractérisé par sa forte simplicité d'utilisation et les nombreux plugins et extensions qui lui sont dédiées.
 \section{Analyseur de règles de production}
-\section{Schéma de base du moteur d'inférence}
+\paragraph{}
+Afin de minimiser la modification du code, et pour des soucis de gain de temps, nous avons implémenter un mini-analyseur dont le but est de charger le contenu de deux fichiers(variables,rules) dans la base de faits d'un expert, le format adopté est inspiré des langages balisés, ce module se compose de sous modules : \\
+\subsection{Analyseur de variables (variableParser)} \label{varParser}
+\paragraph{}
+Il s'occupe de prendre en entré un fichier remplit avec des variables et leurs valeurs possible(dans langage que nous avons mis au point), toute variable est de la forme suivante : \\
+\newpage
+\begin{minipage}{\textwidth}
+	\centering
+	\Large{<\textcolor{blue}{VarName} : \textcolor{Magenta}{Type}>val$_1$,$\dots$,val$_n$,</\textcolor{blue}{VarName}>}
+\end{minipage}
+\\
+\begin{itemize}[label=\textbullet, font=\color{black}]
+	\item La liste de valeurs possibles val$_1$,$\dots$,val$_n$, peut être vide.
+	\item \textcolor{blue}{VarName} est le nom de la variable qui servira à l'identifier plus tard dans le programme.
+	\item \textcolor{Magenta}{Type} est une structure que nous avons conçu pour supporter entre autre les type primitifs : String,Int,Double.. mais aussi les intervalles([a,b],]a,b],[$-\infty$,b]$\dots$) 	
+\end{itemize}
+
+\paragraph{}Quelques examples de variables : \\
+\begin{itemize}[label=\textbullet, font=\color{black}]
+	\item <\textcolor{blue}{Season} : \textcolor{Magenta}{String}>Summer,Winter,Autumn,Spring,</\textcolor{blue}{Season} >
+	\item <\textcolor{blue}{Temperature} : \textcolor{Magenta}{Double}>28.5 , 15.5,</\textcolor{blue}{Temperature} >
+	\item <\textcolor{blue}{Price} : \textcolor{Magenta}{Double}></\textcolor{blue}{Temperature} >
+\end{itemize}
+
+\subsection{Analyseur de règles (ruleParser)} 
+\paragraph{}
+Ce module prend en entré un fichier de règles écrite elles aussi dans une langage dédié, toute règle s'écrit comme suit : \\\\
+\begin{minipage}{\textwidth}
+	\centering
+	\Large <VarResult> = <cond$_1$>, $\dots$ <cond$_n$>,\\
+\end{minipage}
+
+\paragraph{}Ou VarResult et cond$_i$ ont la même structure suivante : \\
+
+\begin{minipage}{\textwidth}
+	\centering
+	\Large{<\textcolor{blue}{VarName}/\textcolor{Magenta}{Type}/\textcolor{gray}{cond}/\textcolor{red}{value}>}
+\end{minipage}
+\\
+\begin{itemize}[label=\textbullet, font=\color{black}]
+	\item \textcolor{blue}{VarName} est le nom de la variable qui servira à l'identifier plus tard dans le programme.
+	\item \textcolor{Magenta}{Type} est le même type structuré vu dans \ref{varParser}
+	\item \textcolor{gray}{cond} est la condtion sur la valeur de la variable courante(= ,< , > != ..)
+	\textcolor{red}{value} La valeur suivant le type de la variable
+\end{itemize}
 \section{Modifications apportées}
-\section{Interface homme-machine}
+\paragraph{}
+Le système expert de base qui nous a été demandé d'améliorer était très limité(gère les valeurs comme des chaines de caractères uniquement, conditions d'égalité seulement entre les valeurs, ..), nous avons donc décidé d'ajouter certaines fonctionnalités a ce systèmes : \\
+\subsection{Typage des variables}
+L'inconvénient en travaillant seulement avec des String est le manque de flexibilité des valeurs, nous avons donc subdivisé le typage en 4 groupes : \\
+\begin{itemize}[label=\textbullet, font=\color{black}]
+	\item StringVariableValue : Type basique, généralement la plus part des variables ont ce type, il peut désigner un catégorie, un nom, une propriété nominale ... etc.
+	\item IntegerVariableValue : Type basique pour désigner les valeurs discrètes telle que le nombre l'age.
+	\item DoubleVariableValue : Type basique pour désigner les valeurs continues(beaucoup plus fréquentes) telles que le prix, la température ... etc
+	\item IntervalUnion : Type complexe pour désigner tout séquence de valeur non dénombrable comme l'union de plusieurs intervalles([0,2]$\cup$[5,22]$\cup$[55,69[), une valeur minimum(value>min) our maximum ... etc
+\end{itemize}
+
+\subsection{Introduction de nouvelles conditions}
+Les conditions utilisables n'étant que l'égalité et l'inégalité(qui ne fonctionnait pas à la base), nous avons opté pour une restructuration du système d'évaluation, avec l'introduction du typage vu précédemment nous avons pu introduire deux nouveaux opérateur de conditions qui sont le $>(\geq) $ et le $<(\leq)$, ces deux opérateur nous ont permis ainsi de délimiter sous forme d'intervalle les valeurs de certaines variables. 

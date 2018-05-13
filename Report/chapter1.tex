@@ -1,6 +1,28 @@
 \chapter{Introduction}
 \section{Problématique et besoins}
+\paragraph{}
+Dans le domaine de l'intelligence artificielle, nous somme souvent confrontés à la modélisation des connaissances d'un format brute(e.g langage naturel) en un format interprétable par les machines à travers un formalisme mathématique(logique), une des premières propositions fut l'introduction d'un système de règles logiques (ensembles de conditions et leurs conséquences) accompagné d'un mécanisme de déduction(à l'instar de la façon dont l'homme traite un problème) nommé \textbf{Système expert}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{imgs/expert.jpg}
+	\caption{}
+\end{figure}
+
+\newpage
+
 \section{Définitions}
+\subsection{Base de connaissances}
+Une base de connaissance est un ensemble de connaissance modélisée de telle sorte à être compréhensibles par un ordinateur, elle peut être sous la forme d'une base de règle de productions(voir point suivant), d'une base de faits\footnote{Ensemble de connaissances que le système considère comme vraies.} ou des deux en même temps.
 \subsection{Règles de production}
+\paragraph{}
+Les règles de production sont des formules logiques de types : \\ $A_1 \land A_2 \land \dots \land A_n \rightarrow B$ où : 
+\begin{itemize}
+	\item $A_1 \land A_2 \land \dots \land A_n$ Sont des formules logiques bien formée(de la logique propositionnelle ou celle des prédicats en générale), elle représentent les prémisses(conditions) d'application de la règle.
+	\item $B$ Représente la connaissance déductible des conditions précédentes.
+	\item $\rightarrow$ le symbole de l'implication logique classique
+\end{itemize}
+Si toutes les conditions $A_i$ sont vérifiées alors on peut ajouter la nouvelle connaissance $B$ à la base de connaissances.
 \subsection{Moteur d'inférence}
+Dans un système expert, un moteur d'inférence est un module qui prend en entrée une base de connaissances $BC$, une base de faits $BF$ et essaye, en appliquant soit l'algorithme de chainage avant ou bien celui du chainage arrière ( tout dépendant du besoin ou la nature de la question posé par un utilisateur) de trouver un cheminement logique(i.e une succession d'application de règle de production) de telle sorte à arriver une connaissance $B$ en particulier, ou bien à un ensemble de connaissances dérivable des faits introduit en entrée.
 \subsection{Système expert}
+Un système expert est un outil dont le but est d'imiter le comportement d'un véritable expert humain dans un domaine particulier, et donc de parvenir a travers l'observation de différents faits à répondre à une question ou de proposer un ensemble de solutions à un problème, c'est un outil d'aide à la décision très utile dans le domaine de l'intelligence artificielle.
