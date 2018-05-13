@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="jedit">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/jedit.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/SideKick.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/BufferTabs.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/ant-1.9.7.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/cartago-2.3-SNAPSHOT.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/ErrorList.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/ant-launcher-1.9.7.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/jaca-2.3-SNAPSHOT.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/jason-2.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jason-2.2a/libs/jade-4.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

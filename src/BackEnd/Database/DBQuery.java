@@ -82,7 +82,6 @@ public class DBQuery
     public void createTableQuerry(String tableName, String... columns)
     {
         this.query = generateCreateTableQuery(tableName, columns);
-        this.setQuery(query);
     }
 
 
@@ -93,11 +92,6 @@ public class DBQuery
         for (int i = 0; i < columns.length - 1; i += 2)
         {
             query += columns[i] + " " + columns[i + 1] + ",\n";
-        }
-
-        for (String comp : columns)
-        {
-
         }
         query = query.substring(0, query.length() - 2);
         query += "\n);";
