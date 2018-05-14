@@ -1,6 +1,5 @@
 % !TeX spellcheck = en_US
 \chapter{Implémentation d'un système multi-agents avec la plateforme JADE}
-\section{Outils utilisés}
 \section{Schéma globale}
 \paragraph{}
 Notre conception du système multi-agents se base sur trois types d’agents:
@@ -56,18 +55,18 @@ Par la suite, l’agent enregistreur répond aux agents centraux et il leur comm
 	\label{fig:comRules}
 \end{figure}
 \newpage
-Jusqu’à présent le vrai rôle de l’agent enregistreur n’apparait pas. C’est quand un nouveau agent qui se connecte dans le système qu’on aperçoit son rôle. Le nouveau agent n’a pas à communiquer avec tous les autres agents pour qu’il soit connu dans son environnement, il suffit d’informer l’agent enregistreur pour réaliser cela. Quand un agent annexe arrive, il envoi ses informations à l’agent enregistreur, ce dernier informe les agents centraux de son arrivé pour qu’ils puissent le contacter.
+Jusqu’à présent le vrai rôle de l’agent enregistreur n’apparait pas. C’est quand un nouvel agent qui se connecte dans le système qu’on aperçoit son rôle. Le nouvel agent n’a pas à communiquer avec tous les autres agents pour qu’il soit connu dans son environnement, il suffit d’informer l’agent enregistreur pour réaliser cela. Quand un agent annexe arrive, il envoi ses informations à l’agent enregistreur, ce dernier informe les agents centraux de son arrivé pour qu’ils puissent le contacter.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{imgs/newAnnexe.png}
-	\caption{L'arrivé d'un nouveau agent annexe}
+	\caption{L'arrivé d'un nouvel agent annexe}
 	\label{fig:newAnnexe}
 \end{figure}
 Quand un agent central arrive, l’agent enregistreur l’informe des agents annexes existant, et l’ajoute à la liste des agents centraux.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{imgs/newCentral.png}
-	\caption{L'arrivé d'un nouveau agent central}
+	\caption{L'arrivé d'un nouvel agent central}
 	\label{fig:newCentral}
 \end{figure}
 \newpage
